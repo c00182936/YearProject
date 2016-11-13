@@ -1,0 +1,4 @@
+﻿  GameScreen.cpp
+h:\yearproject\base\base\gamescreen.cpp(28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Base.vcxproj -> H:\YearProject\Base\Debug\Base.exe
+  Base.vcxproj -> H:\YearProject\Base\Debug\Base.pdb (Partial PDB)
