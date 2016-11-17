@@ -2,9 +2,6 @@
 
 GameScreen::GameScreen(int gridHeight, int gridWidth) : gridCols(gridHeight), gridRows(gridWidth)
 {
-	//Need to make a 2D array or vector of vectors(?) to represent the grid.
-	//vector< vector<object> >
-	//Each entry is a Crystal object that has its Colour property.
 	std::vector<Crystal> temp;
 	sf::Vector2f tempPos(40,40);
 	cursorPosition = sf::Vector2i(1, 1);
@@ -18,8 +15,6 @@ GameScreen::GameScreen(int gridHeight, int gridWidth) : gridCols(gridHeight), gr
 		temp.clear();
 		for (int j = 0; j < gridRows; j++)
 		{
-			//It seems this [i][j] method of referring to a tile isn't going to work.
-			//How do I 2D vector.
 			temp.push_back(Crystal(tempPos));
 			tempPos += sf::Vector2f(0, 50);
 			//grid[i][j] = new Crystal();
@@ -32,9 +27,11 @@ GameScreen::GameScreen(int gridHeight, int gridWidth) : gridCols(gridHeight), gr
 std::string GameScreen::update(sf::RenderWindow & window)
 {
 	if (keydown == false) {
+		//Movement keys change function depending on mode.
+		//In Move Mode, arrow keys move the cursor around the board.
+		//In Swap Move, arrow keys selects a tile to switch with.
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			// move left...
+		{//Move/Swap Left
 			if (cursorPosition.x > 0) {
 				if (swapMode == true)
 				{
@@ -46,8 +43,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			keydown = true;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			// move right...
+		{//Move/Swap Right
 			if (cursorPosition.x < gridRows - 1) {
 				if (swapMode == true)
 				{
@@ -59,8 +55,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			keydown = true;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			// quit...
+		{//Move/Swap Down
 			if (cursorPosition.y < gridCols - 1)
 			{
 				if (swapMode == true)
@@ -73,8 +68,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			keydown = true;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			
+		{//Move/Swap Up			
 			if (cursorPosition.y > 0)
 			{
 				if (swapMode == true)
@@ -87,8 +81,8 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			keydown = true;
 
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+		{//When Space is pressed, changes modes to alter directional key function, and marks the currently selected tile as ready to be swapped.
 			swapMode = true;
 			tileToSwap = cursorPosition;
 		}
@@ -107,13 +101,15 @@ std::string GameScreen::update(sf::RenderWindow & window)
 
 void GameScreen::draw(sf::RenderWindow & window)
 {
+	//Iterates through each tile...
 	for (int i = 0; i < gridCols; i++)
 	{
 		for (int j = 0; j < gridRows; j++)
-		{//Commenting this out for now until I can figure out how to refer to tile.
+		{//...and calls its Draw method.
 			grid[i][j].draw(window);
 		}
 	}
+	//
 	cursor.setTexture(cursorTex);
 	window.draw(cursor);
 }
@@ -177,7 +173,7 @@ void GameScreen::CheckMatch()
 		}
 		while (dirChecked == 3)
 		{//down
-			currentTile += sf::Vector2i(0, -1);
+			currentTile += sf::Vector2i(0, 1);
 			if (compareTiles(grid[currentTile.x][currentTile.y], grid[prevTile.x][prevTile.y]) && currentTile.y<gridRows)
 			{
 				yCount++;
@@ -195,21 +191,22 @@ void GameScreen::CheckMatch()
 }
 
 void GameScreen::SwapTile(sf::Vector2i dir)
-{//VERY FUCKING JANKY
-	//Crystal temp= grid[tileToSwap.x][tileToSwap.y];
-	//grid[tileToSwap.x + dir.x][tileToSwap.y + dir.y] =grid[tileToSwap.x][tileToSwap.y ];
-	//grid[tileToSwap.x + dir.x][tileToSwap.x + dir.y] = temp;
-	auto col = grid[tileToSwap.x + dir.x][tileToSwap.y + dir.y].getCol();//a
-	grid[tileToSwap.x + dir.x][tileToSwap.y + dir.y].setCol(grid[tileToSwap.x][tileToSwap.y].getCol());//b=c
-	grid[tileToSwap.x][tileToSwap.x].setCol(col);//c=a
+{
+	//Simple swap action, creates a temp variable and uses it to swap colour values.
+	auto col = grid[tileToSwap.x + dir.x][tileToSwap.y + dir.y].getCol(); //Setting up the temp...
+	grid[tileToSwap.x + dir.x][tileToSwap.y + dir.y].setCol(grid[tileToSwap.x][tileToSwap.y].getCol()); //Copies one tile's colour over the other's.
+	grid[tileToSwap.x][tileToSwap.y].setCol(col); //Copies temp's colour over the first tile.
+	//Now, to redraw the textures of both.
 	grid[tileToSwap.x + dir.x][tileToSwap.y + dir.y].updateTextures();
-	grid[tileToSwap.x][tileToSwap.x].updateTextures();
+	grid[tileToSwap.x][tileToSwap.y].updateTextures();
+
+	//Resets control mode back to Move Mode
 	swapMode = false;
-	//CheckMatch();
+	CheckMatch();
 }
 
 bool GameScreen::compareTiles(Crystal & a, Crystal & b)
-{
+{//Checks if "type" value of both Crystals are identical.
 	if (a.getCol() == b.getCol())
 	{
 		return true;
