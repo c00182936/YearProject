@@ -9,7 +9,8 @@
 
 ScreenManager::ScreenManager()
 {
-
+	menu = MainMenu("mainMenu");
+	screen = GameScreen(10, 10);
 }
 
 ScreenManager::ScreenManager(sf::RenderWindow &win) :window(&win)
@@ -18,6 +19,7 @@ ScreenManager::ScreenManager(sf::RenderWindow &win) :window(&win)
 	
 	currentScreen = "mainMenu";
 	menu = MainMenu("mainMenu");
+	screen = GameScreen(10, 10);
 }
 
 void ScreenManager::update()

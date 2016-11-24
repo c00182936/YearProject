@@ -121,6 +121,7 @@
     <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="Crystal.cpp" />
     <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="HudManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="Crystal.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="HudManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="ScreenManager.h" />

@@ -36,6 +36,9 @@
     <ClCompile Include="Crystal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HudManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScreen.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Crystal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HudManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

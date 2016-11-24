@@ -60,7 +60,7 @@ void Crystal::draw(sf::RenderWindow &win)
 	sprite.setTexture(tile);
 	if (checked == true)
 	{
-		sprite.setColor(sf::Color::Yellow);
+		sprite.setColor(sf::Color::Green);
 	}
 	else
 	{
