@@ -35,6 +35,9 @@ GameScreen::GameScreen()
 		grid.push_back(temp);
 		tempPos += sf::Vector2f(50, -gridRows * 50);
 	}
+
+	p1 = Player();
+	//hud = HudManager();
 }
 
 GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeight), gridRows(gridWidth)
@@ -155,6 +158,9 @@ void GameScreen::draw(sf::RenderWindow & window)
 	//
 	cursor.setTexture(cursorTex);
 	window.draw(cursor);
+
+	//hud.Draw(window, p1.getAP("Red"), p1.getAP("Green"), p1.getAP("Blue"));
+	hud.Draw(window, 300, 75, 150); //Feel free to play with these values, see what results.
 }
 
 void GameScreen::CheckMatch(sf::Vector2i check)
