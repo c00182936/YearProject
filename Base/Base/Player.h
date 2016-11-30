@@ -18,11 +18,12 @@ private:
 public:
 	Player();
 	Player(int gTime);
-	void changeScore(int length, std::string colour);
 	void update(); //Timers count down.
 
 	int getScore();
+	void changeScore(int length, std::string colour);
 	int getAP(std::string colour);
+	void changeAP(std::string colour, int apGain);
 	float getComboLV();
 	int getComboTime();
 	int getGameTime();

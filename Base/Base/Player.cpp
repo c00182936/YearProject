@@ -3,6 +3,7 @@
 Player::Player()
 {//By default, game time starts at 300,000ms, or five minutes.
 	gameTime = 300000;
+	rCharge = 0; gCharge = 0; bCharge = 0;
 }
 
 Player::Player(int gTime) : gameTime(gTime)
@@ -46,6 +47,35 @@ void Player::changeScore(int length, std::string colour)
 	}
 	//Reset combo timer.
 	comboTime = 10000;
+}
+
+void Player::changeAP(std::string colour, int apGain)
+{//Temporary method for testing purposes, might be removed later. 
+	//Added so that AP can be increased/decreased without messing with the score.
+	if (colour == "Red")
+	{ 
+		rCharge += apGain; 
+		if (rCharge > 300)
+		{ rCharge = 300; }
+		else if (rCharge < 0)
+		{ rCharge = 0; }
+	}
+	else if (colour == "Green")
+	{ 
+		gCharge += apGain; 
+		if (gCharge > 300)
+		{ gCharge = 300; }
+		else if (gCharge < 0)
+		{ gCharge = 0; }
+	}
+	else if (colour == "Blue")
+	{ 
+		bCharge += apGain; 
+		if (bCharge > 300)
+		{ bCharge = 300; }
+		else if (bCharge < 0)
+		{ bCharge = 0; }
+	}
 }
 
 void Player::update()

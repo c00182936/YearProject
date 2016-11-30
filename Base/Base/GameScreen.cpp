@@ -136,6 +136,29 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		{
 			return "mainMenu";
 		}
+
+		//Added temporarily for the purpose of testing Ability Points.
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+			{ p1.changeAP("Red", -100); }
+			else
+			{ p1.changeAP("Red", 20); }
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+			{ p1.changeAP("Green", -100); }
+			else
+			{ p1.changeAP("Green", 20); }
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+			{ p1.changeAP("Blue", -100); }
+			else
+			{ p1.changeAP("Blue", 20); }
+		}
 	}
 	else
 	{
@@ -159,8 +182,7 @@ void GameScreen::draw(sf::RenderWindow & window)
 	cursor.setTexture(cursorTex);
 	window.draw(cursor);
 
-	//hud.Draw(window, p1.getAP("Red"), p1.getAP("Green"), p1.getAP("Blue"));
-	hud.Draw(window, 300, 75, 150); //Feel free to play with these values, see what results.
+	hud.Draw(window, p1.getAP("Red"), p1.getAP("Green"), p1.getAP("Blue"));
 }
 
 void GameScreen::CheckMatch(sf::Vector2i check)
