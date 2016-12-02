@@ -125,6 +125,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>

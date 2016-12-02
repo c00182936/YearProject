@@ -1,10 +1,6 @@
-﻿  GameScreen.cpp
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(5): warning C4018: '<': signed/unsigned mismatch
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(7): warning C4018: '<': signed/unsigned mismatch
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(15): warning C4018: '<': signed/unsigned mismatch
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(17): warning C4018: '<': signed/unsigned mismatch
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(193): warning C4018: '<': signed/unsigned mismatch
+﻿  Player.cpp
+c:\users\gameuser\yearproject\base\base\player.cpp(22): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\gameuser\yearproject\base\base\player.cpp(23): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
+c:\users\gameuser\yearproject\base\base\player.cpp(109): warning C4715: 'Player::getAP': not all control paths return a value
   Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.exe
   Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.pdb (Partial PDB)
