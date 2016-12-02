@@ -10,6 +10,19 @@ void GameScreen::resetChecked()
 		}
 	}
 }
+void GameScreen::MarkChecked()
+{
+	for (size_t i = 0; i < gridCols; i++)
+	{
+		for (size_t u = 0; u < gridRows; u++)
+		{
+			if (grid.at(i).at(u).checked == true)
+			{
+				grid.at(i).at(u).toRemove = true;
+			}
+		}
+	}
+}
 
 GameScreen::GameScreen()
 {
@@ -133,6 +146,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		{
 			return "mainMenu";
 		}
+
 	}
 	else
 	{
@@ -149,6 +163,11 @@ void GameScreen::draw(sf::RenderWindow & window)
 	{
 		for (int j = 0; j < gridRows; j++)
 		{//...and calls its Draw method.
+			if (grid.at(i).at(j).getCol() == Colour::null&&j>0)
+			{
+				//tileToSwap = sf::Vector2i(i, j);
+				//SwapTileWithoutCheck(sf::Vector2i(0, -1));
+			}
 			grid[i][j].draw(window);
 		}
 	}
@@ -156,10 +175,10 @@ void GameScreen::draw(sf::RenderWindow & window)
 	cursor.setTexture(cursorTex);
 	window.draw(cursor);
 }
-
+//complete
 void GameScreen::CheckMatch(sf::Vector2i check)
 {
-	int count = 1;
+	int count = 0;
 	//will increment when a match can't be found
 	int dirChecked = 1;//1=left, 2=right, 3=up, 4=down, 5=fin
 	//will check other directions until either a full match is found or all directions are checked
@@ -174,26 +193,33 @@ void GameScreen::CheckMatch(sf::Vector2i check)
 		assert(currentTile.x >= 0 && currentTile.x < grid.size());
 		while (dirChecked==1)//left
 		{
-			if (currentTile.x - 1 <= 0)
+			//checks if the next tile to be iterated to is out of bounds
+			if (currentTile.x - 1 < 0)
 			{
 				std::cout << "out of bounds" << std::endl;
 				dirChecked++;
 			}
 			else if ((grid.at(currentTile.x).at(currentTile.y).getCol()== grid.at(currentTile.x-1).at(currentTile.y).getCol()))
-			{
+			{//checks to the left of the current tile, and if true, moves the current tile in that direction
 				currentTile.x -= 1;
 				grid.at(currentTile.x).at(currentTile.y).checked = true;
 				count++;
 				std::cout << "Left"<< std::endl;
 			}
-			else
-			{
+			else if ((grid.at(currentTile.x).at(currentTile.y).getCol() != grid.at(currentTile.x - 1).at(currentTile.y).getCol()))
+			{//if the two tiles don't match, set the currently selected tile to the origin and iterate direction
 				dirChecked++;
 				currentTile = check;
+			}
+			else
+			{//if all else fails
+				std::cout << "something went wrong" << std::endl;
+				dirChecked++;
 			}
 		}
 		while (dirChecked == 2)//right
 		{
+			//checks if the next tile to be iterated to is out of bounds
 			if (currentTile.x + 1 >= gridCols)
 			{
 				std::cout << "out of bounds" << std::endl;
@@ -212,18 +238,27 @@ void GameScreen::CheckMatch(sf::Vector2i check)
 				currentTile = check;
 			}
 		}
-		if (count>=4)//ensures you don't have a multi shaped match
+		if (count>=3)//ensures you don't have a multi shaped match
 		{
-			dirChecked = 5;//if you have 4 or more in a row, you stop checking
+			//dirChecked = 5;//if you have 4 or more in a row, you stop checking
+
+			count = 0;//to not mess with the next set of checks
+			grid.at(check.x).at(check.y).checked = true;
+			
+			currentTile = check;
+			MarkChecked();
 		}
 		else
 		{
+			std::cout << "no X match" << std::endl;
 			count = 0;//otherwise, you reset your count and try up/down
 			currentTile = check;
+			resetChecked();
 		}
 		while (dirChecked == 3)
 		{
-			if (currentTile.y - 1 <=0)
+			//checks if the next tile to be iterated to is out of bounds
+			if (currentTile.y - 1 <0)
 			{
 				std::cout << "out of bounds" << std::endl;
 				dirChecked++;
@@ -243,6 +278,7 @@ void GameScreen::CheckMatch(sf::Vector2i check)
 		}
 		while (dirChecked == 4)
 		{
+			//checks if the next tile to be iterated to is out of bounds
 			if (currentTile.y + 1 >= gridRows)
 			{
 				std::cout << "out of bounds" << std::endl;
@@ -264,28 +300,54 @@ void GameScreen::CheckMatch(sf::Vector2i check)
 	}
 	if (count < 3)
 	{
-		resetChecked();
+		std::cout << "no Y match" << std::endl;
 	}
-	else if (count > 3)
+	else if (count >=3)
 	{
-		grid.at(currentTile.x).at(currentTile.y).checked = true;
+		grid.at(check.x).at(check.y).checked = true;
+		MarkChecked();
+		
 	}
+	resetChecked();
 }
-
+//complete
 void GameScreen::SwapTile(sf::Vector2i dir)
 {
 	//Simple swap action, creates a temp variable and uses it to swap colour values.
 	auto col = grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).getCol(); //Setting up the temp...
+
 	grid.at(tileToSwap.x+dir.x).at(tileToSwap.y+dir.y).setCol(grid.at(tileToSwap.x).at(tileToSwap.y).getCol()); //Copies one tile's colour over the other's.
+
 	grid.at(tileToSwap.x).at(tileToSwap.y).setCol(col); //Copies temp's colour over the first tile.
+
 	//Now, to redraw the textures of both.
+
 	grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).updateTextures();
+
 	grid.at(tileToSwap.x).at(tileToSwap.y).updateTextures();
+
 	//Resets control mode back to Move Mode
 	
 	CheckMatch(tileToSwap);
 	CheckMatch(tileToSwap + dir);
 	swapMode = false;
+}
+void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir)
+{
+	//Simple swap action, creates a temp variable and uses it to swap colour values.
+	auto col = grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).getCol(); //Setting up the temp...
+
+	grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).setCol(grid.at(tileToSwap.x).at(tileToSwap.y).getCol()); //Copies one tile's colour over the other's.
+
+	grid.at(tileToSwap.x).at(tileToSwap.y).setCol(col); //Copies temp's colour over the first tile.
+
+														//Now, to redraw the textures of both.
+
+	grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).updateTextures();
+
+	grid.at(tileToSwap.x).at(tileToSwap.y).updateTextures();
+
+	//Resets control mode back to Move Mode
 }
 
 bool GameScreen::compareTiles(Crystal & a, Crystal & b)

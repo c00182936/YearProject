@@ -4,6 +4,7 @@
 #include "Crystal.h"
 #include <vector>
 #include <assert.h>
+#include"Colour.h"
 
 class GameScreen
 {
@@ -14,11 +15,13 @@ private:
 	sf::Texture cursorTex;
 	sf::Vector2i cursorPosition;
 	sf::Vector2i tileToSwap;
+	void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir);
 	bool keydown;
 	bool swapMode;
 	int gridCols;
 	int gridRows;
 	void resetChecked();
+	void MarkChecked();
 public:
 	GameScreen();
 	GameScreen(int gridHeight, int gridWidth);

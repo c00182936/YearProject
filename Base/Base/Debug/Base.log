@@ -1,8 +1,10 @@
 ﻿  GameScreen.cpp
 c:\users\gameuser\yearproject\base\base\gamescreen.cpp(5): warning C4018: '<': signed/unsigned mismatch
 c:\users\gameuser\yearproject\base\base\gamescreen.cpp(7): warning C4018: '<': signed/unsigned mismatch
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\gameuser\yearproject\base\base\gamescreen.cpp(174): warning C4018: '<': signed/unsigned mismatch
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(15): warning C4018: '<': signed/unsigned mismatch
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(17): warning C4018: '<': signed/unsigned mismatch
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(193): warning C4018: '<': signed/unsigned mismatch
   Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.exe
   Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.pdb (Partial PDB)

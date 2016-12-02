@@ -1,16 +1,11 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include <vector>
-
+#include"Colour.h"
 class Crystal
 {
 private:
-	enum class Colour 
-	{
-		Red, Green, Blue,
-		Cyan, Magenta, Yellow,
-		Black, White, Rainbow
-	};
+
 	Colour type; //Stores the value of individual colour.
 	sf::Texture tile;
 	sf::Sprite sprite;
@@ -26,6 +21,7 @@ public:
 	Colour &getCol() { return type; };
 	void setCol(Colour c) { type = c; }
 	void updateTextures();
-	bool checked;
+	bool checked=false;
+	bool toRemove=false;
 	~Crystal();
 };

@@ -9,6 +9,7 @@
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "My window");
+	window.setFramerateLimit(30);
 	sf::Texture sprite;
 	//MenuButton butn = MenuButton("cumberbumber", "Assets/Sprites/play.png", sf::FloatRect(30, 30, 100, 300));
 	//ButtonManager btn = ButtonManager();

@@ -58,13 +58,14 @@ void Crystal::draw(sf::RenderWindow &win)
 {
 	//Draw sprite based on "type" value (and its position in the vector?).
 	sprite.setTexture(tile);
-	if (checked == true)
+	if (toRemove == true)
 	{
-		sprite.setColor(sf::Color::Green);
+		sprite.setColor(sf::Color(255,255,255,50));
+		type=Colour::null;
 	}
-	else
+	if(toRemove==false)
 	{
-		sprite.setColor(sf::Color::White);
+		sprite.setColor(sf::Color(255,255,255,255));
 	}
 	win.draw(sprite);
 }

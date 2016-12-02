@@ -135,6 +135,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="TileColour.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

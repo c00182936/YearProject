@@ -62,5 +62,8 @@
     <ClInclude Include="HudManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TileColour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
