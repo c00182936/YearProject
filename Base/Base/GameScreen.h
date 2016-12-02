@@ -1,7 +1,9 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include "ButtonManager.h"
+#include "HudManager.h"
 #include "Crystal.h"
+#include "Player.h"
 #include <vector>
 #include <assert.h>
 
@@ -19,6 +21,9 @@ private:
 	int gridCols;
 	int gridRows;
 	void resetChecked();
+
+	HudManager hud;
+	Player p1;
 public:
 	GameScreen();
 	GameScreen(int gridHeight, int gridWidth);
