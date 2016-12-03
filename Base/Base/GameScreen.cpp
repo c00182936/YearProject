@@ -191,7 +191,8 @@ void GameScreen::draw(sf::RenderWindow & window)
 			if (grid.at(i).at(j).getCol() == Colour::null&&j>0)
 			{
 				//tileToSwap = sf::Vector2i(i, j);
-				//SwapTileWithoutCheck(sf::Vector2i(0, -1));
+				SwapTileWithoutCheck(sf::Vector2i(0, -1), sf::Vector2i(i,j));
+				grid.at(i).at(j).updateTextures();
 			}
 			grid[i][j].draw(window);
 		}
@@ -359,22 +360,21 @@ void GameScreen::SwapTile(sf::Vector2i dir)
 	CheckMatch(tileToSwap + dir);
 	swapMode = false;
 }
-void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir)
+void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
 {
 	//Simple swap action, creates a temp variable and uses it to swap colour values.
-	auto col = grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).getCol(); //Setting up the temp...
+	auto col = grid.at(pos.x + dir.x).at(pos.y + dir.y).getCol(); //Setting up the temp...
 
-	grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).setCol(grid.at(tileToSwap.x).at(tileToSwap.y).getCol()); //Copies one tile's colour over the other's.
+	grid.at(pos.x + dir.x).at(pos.y + dir.y).setCol(grid.at(pos.x).at(pos.y).getCol()); //Copies one tile's colour over the other's.
 
-	grid.at(tileToSwap.x).at(tileToSwap.y).setCol(col); //Copies temp's colour over the first tile.
+	grid.at(pos.x).at(pos.y).setCol(col); //Copies temp's colour over the first tile.
 
 														//Now, to redraw the textures of both.
 
-	grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).updateTextures();
+	grid.at(pos.x + dir.x).at(pos.y + dir.y).updateTextures();
 
-	grid.at(tileToSwap.x).at(tileToSwap.y).updateTextures();
+	grid.at(pos.x).at(pos.y).updateTextures();
 
-	//Resets control mode back to Move Mode
 }
 
 bool GameScreen::compareTiles(Crystal & a, Crystal & b)

@@ -17,7 +17,7 @@ private:
 	sf::Texture cursorTex;
 	sf::Vector2i cursorPosition;
 	sf::Vector2i tileToSwap;
-	void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir);
+	void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos);
 	bool keydown;
 	bool swapMode;
 	int gridCols;
