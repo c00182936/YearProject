@@ -1,9 +1,13 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include "ButtonManager.h"
+#include "HudManager.h"
 #include "Crystal.h"
+#include "Player.h"
 #include <vector>
 #include <assert.h>
+#include"Colour.h"
+#include <SFML/System/Clock.hpp>
 
 class GameScreen
 {
@@ -14,11 +18,22 @@ private:
 	sf::Texture cursorTex;
 	sf::Vector2i cursorPosition;
 	sf::Vector2i tileToSwap;
+
+	sf::Clock clock;
+
+	void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos);
 	bool keydown;
 	bool swapMode;
 	int gridCols;
 	int gridRows;
 	void resetChecked();
+
+	void MarkChecked();
+
+
+	HudManager hud;
+	Player p1;
+
 public:
 	GameScreen();
 	GameScreen(int gridHeight, int gridWidth);
@@ -26,7 +41,7 @@ public:
 	void draw(sf::RenderWindow & window);
 	~GameScreen();
 	std::string title;
-	void CheckMatch(sf::Vector2i check);
+	std::pair<Colour, int> CheckMatch(sf::Vector2i check);
 	void SwapTile(sf::Vector2i dir);
 	bool compareTiles(Crystal & a, Crystal & b);
 };

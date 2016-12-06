@@ -125,6 +125,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +135,9 @@
     <ClInclude Include="HudManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="TileColour.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

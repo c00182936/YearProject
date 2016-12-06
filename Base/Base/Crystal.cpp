@@ -58,9 +58,15 @@ void Crystal::draw(sf::RenderWindow &win)
 {
 	//Draw sprite based on "type" value (and its position in the vector?).
 	sprite.setTexture(tile);
-	if (checked == true)
+	if (toRemove == true)
 	{
-		sprite.setColor(sf::Color::Green);
+		//sprite.setColor(sf::Color(255,255,255,50));
+		type = Colour::null;
+		toRemove = false;
+	}
+	if (type == Colour::null)
+	{
+		sprite.setColor(sf::Color::Black);
 	}
 	else
 	{
@@ -81,18 +87,22 @@ void Crystal::updateTextures()
 {
 	if (type == Colour::Red)
 	{
-		
+		//sprite.setColor(sf::Color::White);
 		tile.loadFromFile("Assets/Sprites/garnet.png");
 	}
 	else if (type == Colour::Green)
 	{
-		
+		//sprite.setColor(sf::Color::White);
 		tile.loadFromFile("Assets/Sprites/peridot.png");
 	}
 	else if (type == Colour::Blue)
 	{
-		
+		//sprite.setColor(sf::Color::White);
 		tile.loadFromFile("Assets/Sprites/sapphire.png");
+	}
+	else if (type == Colour::null)
+	{
+		sprite.setColor(sf::Color(255, 255, 255, 0));
 	}
 }
 
