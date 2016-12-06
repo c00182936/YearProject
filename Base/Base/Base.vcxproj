@@ -135,6 +135,7 @@
     <ClInclude Include="HudManager.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="TileColour.h" />
   </ItemGroup>

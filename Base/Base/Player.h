@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-
+#include "Colour.h"
 class Player
 {
 private:
@@ -22,8 +22,10 @@ public:
 
 	int getScore();
 	void changeScore(int length, std::string colour);
+	void changeScore(int length, Colour colour);
 	int getAP(std::string colour);
 	void changeAP(std::string colour, int apGain);
+	void changeAP(Colour colour, int apGain);
 	float getComboLV();
 	int getComboTime();
 	int getGameTime();

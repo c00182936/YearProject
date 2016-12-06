@@ -204,9 +204,11 @@ void GameScreen::draw(sf::RenderWindow & window)
 	hud.Draw(window, p1.getAP("Red"), p1.getAP("Green"), p1.getAP("Blue"));
 }
 //complete
-void GameScreen::CheckMatch(sf::Vector2i check)
+std::pair<Colour, int> GameScreen::CheckMatch(sf::Vector2i check)
 {
+	
 	int count = 0;
+	int totalCount=0;
 	//will increment when a match can't be found
 	int dirChecked = 1;//1=left, 2=right, 3=up, 4=down, 5=fin
 	//will check other directions until either a full match is found or all directions are checked
@@ -269,7 +271,7 @@ void GameScreen::CheckMatch(sf::Vector2i check)
 		if (count>=3)//ensures you don't have a multi shaped match
 		{
 			//dirChecked = 5;//if you have 4 or more in a row, you stop checking
-
+			totalCount += count;
 			count = 0;//to not mess with the next set of checks
 			grid.at(check.x).at(check.y).checked = true;
 			
@@ -332,11 +334,14 @@ void GameScreen::CheckMatch(sf::Vector2i check)
 	}
 	else if (count >=3)
 	{
+		totalCount += count;
 		grid.at(check.x).at(check.y).checked = true;
 		MarkChecked();
 		
 	}
+	std::pair<Colour, int> toReturn = std::pair<Colour, int>(grid.at(check.x).at(check.y).getCol(), totalCount);
 	resetChecked();
+	return toReturn;
 }
 //complete
 void GameScreen::SwapTile(sf::Vector2i dir)
@@ -355,9 +360,10 @@ void GameScreen::SwapTile(sf::Vector2i dir)
 	grid.at(tileToSwap.x).at(tileToSwap.y).updateTextures();
 
 	//Resets control mode back to Move Mode
-	
-	CheckMatch(tileToSwap);
+	std::pair<Colour, int> temp=CheckMatch(tileToSwap);
+	p1.changeScore(temp.second,temp.first);
 	CheckMatch(tileToSwap + dir);
+	p1.changeScore(temp.second, temp.first);
 	swapMode = false;
 }
 void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)

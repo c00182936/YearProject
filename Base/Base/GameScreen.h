@@ -37,7 +37,7 @@ public:
 	void draw(sf::RenderWindow & window);
 	~GameScreen();
 	std::string title;
-	void CheckMatch(sf::Vector2i check);
+	std::pair<Colour, int> CheckMatch(sf::Vector2i check);
 	void SwapTile(sf::Vector2i dir);
 	bool compareTiles(Crystal & a, Crystal & b);
 };
