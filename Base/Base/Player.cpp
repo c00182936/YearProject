@@ -73,19 +73,31 @@ void Player::changeScore(int length, Colour colour)
 	{
 		if (colour == Colour::Red)
 		{
-			rCharge += apGain;
+			rCharge += apGain; 
+			if (rCharge > 300)
+			{
+				rCharge = 300;
+			}
 			comboLevel += 1.5;
 			comboTime = sf::seconds(10);
 		}
 		else if (colour == Colour::Green)
 		{
 			gCharge += apGain;
+			if (gCharge > 300)
+			{
+				gCharge = 300;
+			}
 			comboLevel += 1;
 			comboTime = sf::seconds(10);
 		}
 		else if (colour == Colour::Blue)
 		{
 			bCharge += apGain;
+			if (bCharge > 300)
+			{
+				bCharge = 300;
+			}
 			comboLevel += 1;
 			comboTime = sf::seconds(10);
 		}

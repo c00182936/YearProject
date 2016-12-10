@@ -3,6 +3,6 @@ c:\users\thebl\documents\visual studio 2015\projects\y3project\base\base\player.
 c:\users\thebl\documents\visual studio 2015\projects\y3project\base\base\player.cpp(26): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
 c:\users\thebl\documents\visual studio 2015\projects\y3project\base\base\player.cpp(65): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 c:\users\thebl\documents\visual studio 2015\projects\y3project\base\base\player.cpp(66): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-c:\users\thebl\documents\visual studio 2015\projects\y3project\base\base\player.cpp(205): warning C4715: 'Player::getAP': not all control paths return a value
+c:\users\thebl\documents\visual studio 2015\projects\y3project\base\base\player.cpp(217): warning C4715: 'Player::getAP': not all control paths return a value
   Base.vcxproj -> C:\Users\thebl\Documents\Visual Studio 2015\Projects\Y3Project\Base\Debug\Base.exe
   Base.vcxproj -> C:\Users\thebl\Documents\Visual Studio 2015\Projects\Y3Project\Base\Debug\Base.pdb (Partial PDB)

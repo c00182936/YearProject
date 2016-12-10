@@ -80,6 +80,7 @@ GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeigh
 std::string GameScreen::update(sf::RenderWindow & window)
 {
 	p1.update(clock.restart());
+	resetNull();
 
 	if (keydown == false) {
 		//Movement keys change function depending on mode.
@@ -383,6 +384,20 @@ void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
 
 	grid.at(pos.x).at(pos.y).updateTextures();
 
+}
+
+void GameScreen::resetNull() 
+{//Resets the top row of tiles to random colours.
+	//Issue: Top row doesn't draw correctly for some reason.
+	for (int i = 0; i < gridCols; i++)
+	{
+		if (grid.at(i).at(0).getCol() == Colour::null)
+		{
+			Colour col = static_cast<Colour>(rand() % 3); //Will change this to include later colours once added.
+			grid.at(i).at(0).setCol(col);
+			grid.at(i).at(0).updateTextures();
+		}
+	}
 }
 
 bool GameScreen::compareTiles(Crystal & a, Crystal & b)

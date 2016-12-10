@@ -27,6 +27,7 @@ private:
 	int gridCols;
 	int gridRows;
 	void resetChecked();
+	void resetNull();
 
 	void MarkChecked();
 
