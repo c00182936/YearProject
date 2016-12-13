@@ -8,6 +8,9 @@
 #include <assert.h>
 #include"Colour.h"
 
+#include <SFML/System/Clock.hpp>
+
+
 class GameScreen
 {
 private:
@@ -17,12 +20,20 @@ private:
 	sf::Texture cursorTex;
 	sf::Vector2i cursorPosition;
 	sf::Vector2i tileToSwap;
+
+
+	sf::Clock clock;
+
+
 	void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos);
 	bool keydown;
 	bool swapMode;
 	int gridCols;
 	int gridRows;
 	void resetChecked();
+
+	void resetNull();
+
 
 	void MarkChecked();
 

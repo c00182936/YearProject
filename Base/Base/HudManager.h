@@ -1,15 +1,20 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include "Player.h"
 class HudManager
 {
 public:
 	HudManager();
-	void Draw(sf::RenderWindow &win, int r, int g, int b);
+
+	void Draw(sf::RenderWindow &win, Player p1);
+
 	~HudManager();
 private:
 	int point;
 	sf::VertexArray a;
+
+	sf::Font font;
 
 	sf::Vector2f rBarPos;
 	sf::Vector2f gBarPos;

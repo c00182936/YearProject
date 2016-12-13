@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+
+#include <SFML/System/Time.hpp>
+
 #include "Colour.h"
 class Player
 {
@@ -9,16 +12,20 @@ private:
 	//const float ABILITY_POINT_MULTIPLIER = 0.01f;
 
 	int score;
-	int gameTime;
+
+	sf::Time gameTime;
 	float comboLevel;
-	int comboTime;
+	sf::Time comboTime;
+
 	int rCharge;
 	int gCharge;
 	int bCharge;
 public:
 	Player();
-	Player(int gTime);
-	void update(); //Timers count down.
+
+	Player(sf::Time gTime);
+	void update(sf::Time interval); //Timers count down.
+
 
 	int getScore();
 	void changeScore(int length, std::string colour);
@@ -27,6 +34,8 @@ public:
 	void changeAP(std::string colour, int apGain);
 	void changeAP(Colour colour, int apGain);
 	float getComboLV();
-	int getComboTime();
-	int getGameTime();
+
+	sf::Time getComboTime();
+	sf::Time getGameTime();
+
 };

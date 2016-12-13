@@ -1,14 +1,21 @@
 #include "Player.h"
 
 Player::Player()
-{//By default, game time starts at 300,000ms, or five minutes.
-	gameTime = 300000;
+{//By default, game time starts at 300,000ms, or five minutes.	int a = 69;
+	gameTime = sf::seconds(300);
+	comboTime = sf::seconds(0);
 	rCharge = 0; gCharge = 0; bCharge = 0;
+	score = 0;
+	comboLevel = 1;
 }
 
-Player::Player(int gTime) : gameTime(gTime)
+Player::Player(sf::Time gTime) : gameTime(gTime)
 {
-
+	gameTime = sf::seconds(300);
+	comboTime = sf::seconds(0);
+	rCharge = 0; gCharge = 0; bCharge = 0;
+	score = 0;
+	comboLevel = 1;
 }
 
 void Player::changeScore(int length, std::string colour)
@@ -19,24 +26,29 @@ void Player::changeScore(int length, std::string colour)
 	{
 		ptsGain += i * 100;
 	}
-	int apGain = ptsGain * 0.01;
+
+	int apGain = ptsGain * 0.1;
+
 	ptsGain *= comboLevel;
 
 	//Increases total score.
 	score += ptsGain;
 
 	//Increases ability charge and combo counter if applicable.
-	if (colour == "Red")
+
+	if (colour == "Red" && ptsGain > 0)
 	{
 		rCharge += apGain;
 		comboLevel += 1.5;
 	}
-	else if (colour == "Green")
+
+	else if (colour == "Green" && ptsGain > 0)
 	{
 		gCharge += apGain;
 		comboLevel += 1;
 	}
-	else if (colour == "Blue")
+
+	else if (colour == "Blue" && ptsGain > 0)
 	{
 		bCharge += apGain;
 		comboLevel += 1;
@@ -46,7 +58,9 @@ void Player::changeScore(int length, std::string colour)
 		comboLevel += 1;
 	}
 	//Reset combo timer.
-	comboTime = 10000;
+
+	comboTime = sf::seconds(10);
+
 }
 void Player::changeScore(int length, Colour colour)
 {
@@ -54,36 +68,59 @@ void Player::changeScore(int length, Colour colour)
 	int ptsGain = 0;
 	for (int i = 1; i <= length; i++)
 	{
-		ptsGain += i * 100;
+
+		if (length > 2)
+		{
+			ptsGain += i * 100;
+		}
 	}
-	int apGain = ptsGain * 0.01;
+	int apGain = ptsGain * 0.025;
+
 	ptsGain *= comboLevel;
 
 	//Increases total score.
 	score += ptsGain;
 
 	//Increases ability charge and combo counter if applicable.
-	if (colour ==Colour::Red)
+
+	if (ptsGain > 0)
 	{
-		rCharge += apGain;
-		comboLevel += 1.5;
+		if (colour == Colour::Red)
+		{
+			rCharge += apGain; 
+			if (rCharge > 300)
+			{
+				rCharge = 300;
+			}
+			comboLevel += 1.5;
+			comboTime = sf::seconds(10);
+		}
+		else if (colour == Colour::Green)
+		{
+			gCharge += apGain;
+			if (gCharge > 300)
+			{
+				gCharge = 300;
+			}
+			comboLevel += 1;
+			comboTime = sf::seconds(10);
+		}
+		else if (colour == Colour::Blue)
+		{
+			bCharge += apGain;
+			if (bCharge > 300)
+			{
+				bCharge = 300;
+			}
+			comboLevel += 1;
+			comboTime = sf::seconds(10);
+		}
+		else
+		{
+			comboLevel += 1;
+		}
 	}
-	else if (colour == Colour::Green)
-	{
-		gCharge += apGain;
-		comboLevel += 1;
-	}
-	else if (colour == Colour::Blue)
-	{
-		bCharge += apGain;
-		comboLevel += 1;
-	}
-	else
-	{
-		comboLevel += 1;
-	}
-	//Reset combo timer.
-	comboTime = 10000;
+
 }
 void Player::changeAP(std::string colour, int apGain)
 {//Temporary method for testing purposes, might be removed later. 
@@ -154,9 +191,21 @@ void Player::changeAP(Colour colour, int apGain)
 	}
 }
 
-void Player::update()
+
+void Player::update(sf::Time interval)
 {
-	gameTime--;
+	gameTime -= interval;
+	if (comboTime.asSeconds() > 0)
+	{
+		comboTime -= interval;
+	}
+	if (comboTime - interval < sf::seconds(0))
+	{//When time runs out, reset combo.
+		comboTime = sf::seconds(0);
+		comboLevel = 1;
+	}
+	//gameTime--;
+
 	//comboTime--;
 }
 
@@ -187,11 +236,13 @@ float Player::getComboLV()
 {
 	return comboLevel;
 }
-int Player::getComboTime()
+
+sf::Time Player::getComboTime()
 {
 	return comboTime;
 }
-int Player::getGameTime()
+sf::Time Player::getGameTime()
+
 {
 	return gameTime;
 }

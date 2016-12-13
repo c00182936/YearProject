@@ -1,5 +1,8 @@
 #include "HudManager.h"
 
+#include <iostream>
+
+
 HudManager::HudManager()
 {
 	rBarPos = sf::Vector2f(650, 50);
@@ -10,21 +13,106 @@ HudManager::HudManager()
 	{
 
 	}
+	if (!font.loadFromFile("Assets/Fonts/Roboto-Regular.ttf")) {
+		
+	}
+
 
 	rGauge.setPosition(rBarPos);
 	gGauge.setPosition(gBarPos);
 	bGauge.setPosition(bBarPos);
 }
 
-void HudManager::Draw(sf::RenderWindow & win, int r, int g, int b)
+
+void HudManager::Draw(sf::RenderWindow & win, Player player)
 {
+	sf::Time gTime = player.getGameTime();
+	sf::Time cTime = player.getComboTime();
+	float cLevel = player.getComboLV();
+	int pts = player.getScore();
+	int r = player.getAP("Red");
+	int g = player.getAP("Green");
+	int b = player.getAP("Blue");
+
+	//Draw game timers.
+	int seconds = (int)gTime.asSeconds() % 60;
+	int minutes = gTime.asSeconds() / 60;
+
+	//Divider stuff so that it shows for example "4:09" rather than the weird-looking "4:9".
+	std::string divider;
+	if (seconds < 10) {
+		divider = ":0";
+	}
+	else {
+		divider = ":";
+	}
+
+	std::string gTimeDisplay;
+	gTimeDisplay.append(std::to_string(minutes));
+	gTimeDisplay.append(divider);
+	gTimeDisplay.append(std::to_string(seconds));
+
+	//Replace this with text drawing in the game window.
+	//std::cout << gTimeDisplay << std::endl;
+
+	sf::Text gTimeText;
+	gTimeText.setFont(font);
+	gTimeText.setString(gTimeDisplay);
+	gTimeText.setCharacterSize(24);
+	if (minutes == 0)
+	{
+		gTimeText.setFillColor(sf::Color::Red);
+	}
+	gTimeText.setPosition(sf::Vector2f(650, 350));
+
+	std::string cLevelDisplay;
+	cLevelDisplay.append(std::to_string(cLevel));
+	cLevelDisplay.append("x");
+
+	sf::Text cLevelText;
+	cLevelText.setFont(font);
+	cLevelText.setString(cLevelDisplay);
+	cLevelText.setCharacterSize(24);
+	
+	if (cTime.asSeconds() < 2)
+	{//Combo counter begins to fade when combo time is running out.
+		cLevelText.setFillColor(sf::Color(0, 0, 255, 127));
+	}
+	else
+	{//Otherwise draws as normal.
+		cLevelText.setFillColor(sf::Color(0, 0, 255, 255));
+	}
+		
+	cLevelText.setPosition(sf::Vector2f(750, 350));
+
+	sf::Text scoreText;
+	scoreText.setFont(font);
+	scoreText.setString(std::to_string(pts));
+	scoreText.setCharacterSize(24);
+	scoreText.setPosition(sf::Vector2f(850, 400));
+
+	win.draw(gTimeText);
+	if (cLevel > 1)
+	{
+		win.draw(cLevelText);
+	}
+	win.draw(scoreText);
+
+	//Draw Ability gauges.
+
 	rGauge.setTexture(apBarBack);
 	gGauge.setTexture(apBarBack);
 	bGauge.setTexture(apBarBack);
 
+
+	//Drawing the backs of the bars.
+
 	win.draw(rGauge);
 	win.draw(gGauge);
 	win.draw(bGauge);
+
+
+	//Getting the values of the fills.
 
 	int rVal = 0;
 	if (r == 300) 
@@ -61,6 +149,9 @@ void HudManager::Draw(sf::RenderWindow & win, int r, int g, int b)
 	win.draw(rFill);
 	win.draw(gFill);
 	win.draw(bFill);
+
+
+	//Drawing the filled bars below, to indicate stored charges.
 
 	if (rBars >= 1)
 	{

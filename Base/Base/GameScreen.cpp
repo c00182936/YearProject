@@ -79,6 +79,9 @@ GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeigh
 
 std::string GameScreen::update(sf::RenderWindow & window)
 {
+	p1.update(clock.restart());
+	resetNull();
+
 	if (keydown == false) {
 		//Movement keys change function depending on mode.
 		//In Move Mode, arrow keys move the cursor around the board.
@@ -201,7 +204,9 @@ void GameScreen::draw(sf::RenderWindow & window)
 	cursor.setTexture(cursorTex);
 	window.draw(cursor);
 
-	hud.Draw(window, p1.getAP("Red"), p1.getAP("Green"), p1.getAP("Blue"));
+
+	hud.Draw(window, p1);
+
 }
 //complete
 std::pair<Colour, int> GameScreen::CheckMatch(sf::Vector2i check)
@@ -362,7 +367,9 @@ void GameScreen::SwapTile(sf::Vector2i dir)
 	//Resets control mode back to Move Mode
 	std::pair<Colour, int> temp=CheckMatch(tileToSwap);
 	p1.changeScore(temp.second,temp.first);
-	CheckMatch(tileToSwap + dir);
+
+	temp = CheckMatch(tileToSwap + dir);
+
 	p1.changeScore(temp.second, temp.first);
 	swapMode = false;
 }
@@ -382,6 +389,22 @@ void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
 	grid.at(pos.x).at(pos.y).updateTextures();
 
 }
+
+
+void GameScreen::resetNull() 
+{//Resets the top row of tiles to random colours.
+	//Issue: Top row doesn't draw correctly for some reason.
+	for (int i = 0; i < gridCols; i++)
+	{
+		if (grid.at(i).at(0).getCol() == Colour::null)
+		{
+			Colour col = static_cast<Colour>(rand() % 3); //Will change this to include later colours once added.
+			grid.at(i).at(0).setCol(col);
+			grid.at(i).at(0).updateTextures();
+		}
+	}
+}
+
 
 bool GameScreen::compareTiles(Crystal & a, Crystal & b)
 {//Checks if "type" value of both Crystals are identical.
