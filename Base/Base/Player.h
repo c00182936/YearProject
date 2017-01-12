@@ -16,6 +16,8 @@ private:
 	sf::Time gameTime;
 	float comboLevel;
 	sf::Time comboTime;
+	sf::Time feverTime; //Determins the length of time for which the red ability, Fever, is active.
+	bool feverEX; //Shows whether or not Fever is active in its advanced form, boosting point and combo gain.
 
 	int rCharge;
 	int gCharge;
@@ -34,6 +36,8 @@ public:
 	void changeAP(std::string colour, int apGain);
 	void changeAP(Colour colour, int apGain);
 	float getComboLV();
+	void fever(bool ex);
+	bool getFeverLV();
 
 	sf::Time getComboTime();
 	sf::Time getGameTime();
