@@ -74,7 +74,11 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	cLevelText.setString(cLevelDisplay);
 	cLevelText.setCharacterSize(24);
 	
-	if (cTime.asSeconds() < 2)
+	if (player.getFeverLV())
+	{//If the combo counter is frozen by Fever Mode, draw in red to signify this.
+		cLevelText.setFillColor(sf::Color(255, 0, 0, 255));
+	}
+	else if (cTime.asSeconds() < 5)
 	{//Combo counter begins to fade when combo time is running out.
 		cLevelText.setFillColor(sf::Color(0, 0, 255, 127));
 	}
