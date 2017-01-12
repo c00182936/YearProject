@@ -155,24 +155,20 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		//Added temporarily for the purpose of testing Ability Points.
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			{ p1.changeAP("Red", -100); }
-			else
-			{ p1.changeAP("Red", 20); }
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) {
+				p1.fever(true);
+			}
+			else {
+				p1.fever(false);
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			{ p1.changeAP("Green", -100); }
-			else
-			{ p1.changeAP("Green", 20); }
+			p1.changeAP("Green", -100);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			{ p1.changeAP("Blue", -100); }
-			else
-			{ p1.changeAP("Blue", 20); }
+			p1.changeAP("Blue", -100);
 		}
 
 	}
