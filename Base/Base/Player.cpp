@@ -13,6 +13,7 @@ Player::Player(sf::Time gTime) : gameTime(gTime)
 {
 	gameTime = sf::seconds(300);
 	comboTime = sf::seconds(0);
+	feverTime = sf::seconds(0);
 	rCharge = 0; gCharge = 0; bCharge = 0;
 	score = 0;
 	comboLevel = 1;
@@ -92,7 +93,14 @@ void Player::changeScore(int length, Colour colour)
 			{
 				rCharge = 300;
 			}
-			comboLevel += 1.5;
+			if (feverEX)
+			{
+				comboLevel += 4.5;
+			}
+			else
+			{
+				comboLevel += 1.5;
+			}
 			comboTime = sf::seconds(10);
 		}
 		else if (colour == Colour::Green)
@@ -102,7 +110,14 @@ void Player::changeScore(int length, Colour colour)
 			{
 				gCharge = 300;
 			}
-			comboLevel += 1;
+			if (feverEX)
+			{
+				comboLevel += 3;
+			}
+			else
+			{
+				comboLevel += 1;
+			}
 			comboTime = sf::seconds(10);
 		}
 		else if (colour == Colour::Blue)
@@ -112,12 +127,26 @@ void Player::changeScore(int length, Colour colour)
 			{
 				bCharge = 300;
 			}
-			comboLevel += 1;
+			if (feverEX)
+			{
+				comboLevel += 3;
+			}
+			else
+			{
+				comboLevel += 1;
+			}
 			comboTime = sf::seconds(10);
 		}
 		else
 		{
-			comboLevel += 1;
+			if (feverEX)
+			{
+				comboLevel += 3;
+			}
+			else
+			{
+				comboLevel += 1;
+			}
 		}
 	}
 
@@ -195,7 +224,11 @@ void Player::changeAP(Colour colour, int apGain)
 void Player::update(sf::Time interval)
 {
 	gameTime -= interval;
-	if (comboTime.asSeconds() > 0)
+	if (feverTime.asSeconds() > 0)
+	{
+		feverTime -= interval;
+	}
+	if (comboTime.asSeconds() > 0 && feverTime.asSeconds() <= 0)
 	{
 		comboTime -= interval;
 	}
@@ -204,9 +237,29 @@ void Player::update(sf::Time interval)
 		comboTime = sf::seconds(0);
 		comboLevel = 1;
 	}
-	//gameTime--;
+	if (feverTime.asSeconds() <= 0)
+	{
+		feverEX = false;
+	}
+}
 
-	//comboTime--;
+void Player::fever(bool ex) 
+{
+	if (ex) {//If using the advanced form of Fever.
+		if (getAP("Red") == 300) {//Requires a full three bars. Costs all AP, sets Fever timer and activates EX bool.
+			//For a short time, prevents combo timer from decreasing and triples combo counter increment rate.
+			changeAP("Red", -300);
+			feverTime = sf::seconds(5);
+			feverEX = true;
+		}
+	}
+	else {//If using the normal form.
+		if (getAP("Red") >= 100) {//Requires one bar. Costs one bar and sets Fever timer.
+			//For a short time, prevents the combo timer from decreasing to give a little extra time to continue the combo.
+			changeAP("Red", -100);
+			feverTime = sf::seconds(5);
+		}
+	}
 }
 
 int Player::getScore()
@@ -245,4 +298,9 @@ sf::Time Player::getGameTime()
 
 {
 	return gameTime;
+}
+
+bool Player::getFeverLV()
+{
+	return (feverTime.asSeconds() > 0);
 }
