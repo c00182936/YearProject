@@ -2,13 +2,14 @@
 #include<SFML\Window.hpp>
 #include<SFML\Graphics.hpp>
 #include "MainMenu.h"
-
+#include "GameOverScreen.h"
 class ScreenManager
 {//will manage and iterate between screens
 private:	
 	sf::RenderWindow * window;
 	MainMenu menu;
 	GameScreen screen;
+	GameOverScreen gameOver;
 	std::string currentScreen;
 	std::string message;
 	//std::vector<GameScreen> list;

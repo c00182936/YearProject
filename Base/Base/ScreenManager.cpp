@@ -11,6 +11,7 @@ ScreenManager::ScreenManager()
 {
 	menu = MainMenu("mainMenu");
 	screen = GameScreen(10, 10);
+	gameOver = GameOverScreen();
 }
 
 ScreenManager::ScreenManager(sf::RenderWindow &win) :window(&win)
@@ -39,6 +40,10 @@ void ScreenManager::update()
 	{
 		message = screen.update(*window);
 	}
+	else if (currentScreen == "gameOver")
+	{
+		gameOver.update();
+	}
 	
 
 
@@ -55,6 +60,11 @@ void ScreenManager::draw()
 	{
 		screen.draw(*window);
 	}
+	else if (currentScreen == "gameOver")
+	{
+		gameOver.Draw(*window);
+	}
+
 }
 
 void ScreenManager::checkStringCases()
@@ -70,6 +80,11 @@ void ScreenManager::checkStringCases()
 	if (message == "mainMenu")
 	{
 		currentScreen == "mainMenu";
+	}
+	if (message == "gameOver")
+	{
+		currentScreen = "gameOver";
+		gameOver = GameOverScreen(screen.getScoreFromPlayer());
 	}
 }
 

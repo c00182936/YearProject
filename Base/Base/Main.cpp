@@ -34,11 +34,13 @@ int main()
 			// "close requested" event: we close the window
 			if (event.type == sf::Event::Closed)
 				window.close();
-			manager.update();
+			
 			//menu.update(window);
 			//btn.update(window);
 		}
+
 		window.clear();
+		manager.update();
 		//window.draw(testSprite);
 		//btn.draw(window);
 		//menu.draw(window);

@@ -6,16 +6,12 @@ class HudManager
 {
 public:
 	HudManager();
-
 	void Draw(sf::RenderWindow &win, Player p1);
-
 	~HudManager();
 private:
 	int point;
 	sf::VertexArray a;
-
 	sf::Font font;
-
 	sf::Vector2f rBarPos;
 	sf::Vector2f gBarPos;
 	sf::Vector2f bBarPos;

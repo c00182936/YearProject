@@ -7,9 +7,7 @@
 #include <vector>
 #include <assert.h>
 #include"Colour.h"
-
 #include <SFML/System/Clock.hpp>
-
 
 class GameScreen
 {
@@ -17,13 +15,13 @@ private:
 	ButtonManager button;
 	std::vector< std::vector<Crystal> > grid;
 	sf::Sprite cursor;
+	sf::Sprite crystals;
+	sf::Texture crystalSheet;
 	sf::Texture cursorTex;
 	sf::Vector2i cursorPosition;
 	sf::Vector2i tileToSwap;
 
-
 	sf::Clock clock;
-
 
 	void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos);
 	bool keydown;
@@ -31,9 +29,7 @@ private:
 	int gridCols;
 	int gridRows;
 	void resetChecked();
-
 	void resetNull();
-
 
 	void MarkChecked();
 
@@ -46,6 +42,7 @@ public:
 	GameScreen(int gridHeight, int gridWidth);
 	std::string update(sf::RenderWindow & window);
 	void draw(sf::RenderWindow & window);
+	int getScoreFromPlayer();
 	~GameScreen();
 	std::string title;
 	std::pair<Colour, int> CheckMatch(sf::Vector2i check);

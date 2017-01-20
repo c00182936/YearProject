@@ -15,7 +15,7 @@ public:
 	Crystal();
 	Crystal(Colour colour);
 	Crystal(sf::Vector2f pos);
-	void update(sf::RenderWindow &win);
+	void update();
 	void draw(sf::RenderWindow &win);
 	sf::Vector2f &getPos();
 	Colour &getCol() { return type; };

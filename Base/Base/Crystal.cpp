@@ -49,9 +49,14 @@ Crystal::Crystal(sf::Vector2f pos):position(pos)
 	sprite.setScale(0.5, 0.5);
 }
 
-void Crystal::update(sf::RenderWindow &win)
+void Crystal::update()
 {
-
+	if (toRemove == true)
+	{
+		//sprite.setColor(sf::Color(255,255,255,50));
+		type = Colour::null;
+		toRemove = false;
+	}
 }
 
 void Crystal::draw(sf::RenderWindow &win)

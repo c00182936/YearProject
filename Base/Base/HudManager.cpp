@@ -1,7 +1,5 @@
 #include "HudManager.h"
-
 #include <iostream>
-
 
 HudManager::HudManager()
 {
@@ -17,12 +15,10 @@ HudManager::HudManager()
 		
 	}
 
-
 	rGauge.setPosition(rBarPos);
 	gGauge.setPosition(gBarPos);
 	bGauge.setPosition(bBarPos);
 }
-
 
 void HudManager::Draw(sf::RenderWindow & win, Player player)
 {
@@ -74,11 +70,7 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	cLevelText.setString(cLevelDisplay);
 	cLevelText.setCharacterSize(24);
 	
-	if (player.getFeverLV())
-	{//If the combo counter is frozen by Fever Mode, draw in red to signify this.
-		cLevelText.setFillColor(sf::Color(255, 0, 0, 255));
-	}
-	else if (cTime.asSeconds() < 5)
+	if (cTime.asSeconds() < 2)
 	{//Combo counter begins to fade when combo time is running out.
 		cLevelText.setFillColor(sf::Color(0, 0, 255, 127));
 	}
@@ -103,21 +95,16 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	win.draw(scoreText);
 
 	//Draw Ability gauges.
-
 	rGauge.setTexture(apBarBack);
 	gGauge.setTexture(apBarBack);
 	bGauge.setTexture(apBarBack);
 
-
 	//Drawing the backs of the bars.
-
 	win.draw(rGauge);
 	win.draw(gGauge);
 	win.draw(bGauge);
 
-
 	//Getting the values of the fills.
-
 	int rVal = 0;
 	if (r == 300) 
 	{ rVal = 100; }
@@ -154,9 +141,7 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	win.draw(gFill);
 	win.draw(bFill);
 
-
 	//Drawing the filled bars below, to indicate stored charges.
-
 	if (rBars >= 1)
 	{
 		//Draw first bar.
