@@ -1,5 +1,7 @@
 #include "HudManager.h"
+
 #include <iostream>
+
 
 HudManager::HudManager()
 {
@@ -12,13 +14,15 @@ HudManager::HudManager()
 
 	}
 	if (!font.loadFromFile("Assets/Fonts/Roboto-Regular.ttf")) {
-		
+
 	}
+
 
 	rGauge.setPosition(rBarPos);
 	gGauge.setPosition(gBarPos);
 	bGauge.setPosition(bBarPos);
 }
+
 
 void HudManager::Draw(sf::RenderWindow & win, Player player)
 {
@@ -69,8 +73,12 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	cLevelText.setFont(font);
 	cLevelText.setString(cLevelDisplay);
 	cLevelText.setCharacterSize(24);
-	
-	if (cTime.asSeconds() < 2)
+
+	if (player.getFeverLV())
+	{//If the combo counter is frozen by Fever Mode, draw in red to signify this.
+		cLevelText.setFillColor(sf::Color(255, 0, 0, 255));
+	}
+	else if (cTime.asSeconds() < 5)
 	{//Combo counter begins to fade when combo time is running out.
 		cLevelText.setFillColor(sf::Color(0, 0, 255, 127));
 	}
@@ -78,7 +86,7 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	{//Otherwise draws as normal.
 		cLevelText.setFillColor(sf::Color(0, 0, 255, 255));
 	}
-		
+
 	cLevelText.setPosition(sf::Vector2f(750, 350));
 
 	sf::Text scoreText;
@@ -95,35 +103,52 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	win.draw(scoreText);
 
 	//Draw Ability gauges.
+
 	rGauge.setTexture(apBarBack);
 	gGauge.setTexture(apBarBack);
 	bGauge.setTexture(apBarBack);
 
+
 	//Drawing the backs of the bars.
+
 	win.draw(rGauge);
 	win.draw(gGauge);
 	win.draw(bGauge);
 
+
 	//Getting the values of the fills.
+
 	int rVal = 0;
-	if (r == 300) 
-	{ rVal = 100; }
-	else 
-	{ rVal = r % 100; }
+	if (r == 300)
+	{
+		rVal = 100;
+	}
+	else
+	{
+		rVal = r % 100;
+	}
 	int rBars = r / 100;
 
 	int gVal = 0;
 	if (g == 300)
-	{ gVal = 100; }
+	{
+		gVal = 100;
+	}
 	else
-	{ gVal = g % 100; }
+	{
+		gVal = g % 100;
+	}
 	int gBars = g / 100;
 
 	int bVal = 0;
 	if (b == 300)
-	{ bVal = 100; }
+	{
+		bVal = 100;
+	}
 	else
-	{ bVal = b % 100; }
+	{
+		bVal = b % 100;
+	}
 	int bBars = b / 100;
 
 	//Get values from Player class.
@@ -141,7 +166,9 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	win.draw(gFill);
 	win.draw(bFill);
 
+
 	//Drawing the filled bars below, to indicate stored charges.
+
 	if (rBars >= 1)
 	{
 		//Draw first bar.

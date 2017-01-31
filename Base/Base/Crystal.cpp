@@ -53,31 +53,40 @@ void Crystal::update()
 {
 	if (toRemove == true)
 	{
-		//sprite.setColor(sf::Color(255,255,255,50));
-		type = Colour::null;
-		toRemove = false;
+		if (removeTiming > 0)
+		{
+			removeTiming--;
+		}
+		if (removeTiming <= 0)
+		{
+			//sprite.setColor(sf::Color(255,255,255,50));
+			type = Colour::null;
+			toRemove = false;
+			removeTiming = removeAnim;
+		}
+
 	}
 }
 
 void Crystal::draw(sf::RenderWindow &win)
 {
 	//Draw sprite based on "type" value (and its position in the vector?).
-	sprite.setTexture(tile);
-	if (toRemove == true)
-	{
-		//sprite.setColor(sf::Color(255,255,255,50));
-		type = Colour::null;
-		toRemove = false;
-	}
-	if (type == Colour::null)
-	{
-		sprite.setColor(sf::Color::Black);
-	}
-	else
-	{
-		sprite.setColor(sf::Color::White);
-	}
-	win.draw(sprite);
+	//sprite.setTexture(tile);
+	//if (toRemove == true)
+	//{
+	//	//sprite.setColor(sf::Color(255,255,255,50));
+	//	type = Colour::null;
+	//	toRemove = false;
+	//}
+	//if (type == Colour::null)
+	//{
+	//	sprite.setColor(sf::Color::Black);
+	//}
+	//else
+	//{
+	//	sprite.setColor(sf::Color::White);
+	//}
+	//win.draw(sprite);
 }
 
 sf::Vector2f & Crystal::getPos()

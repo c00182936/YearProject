@@ -10,8 +10,9 @@ private:
 	sf::Texture tile;
 	sf::Sprite sprite;
 	sf::Vector2f position;
-	
+	int removeTiming = 30;
 public:
+	int removeAnim = 30;
 	Crystal();
 	Crystal(Colour colour);
 	Crystal(sf::Vector2f pos);

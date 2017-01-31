@@ -38,9 +38,8 @@ int main()
 			//menu.update(window);
 			//btn.update(window);
 		}
-
-		window.clear();
 		manager.update();
+		window.clear();
 		//window.draw(testSprite);
 		//btn.draw(window);
 		//menu.draw(window);
