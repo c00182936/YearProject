@@ -20,7 +20,7 @@ private:
 	sf::Texture cursorTex;
 	sf::Vector2i cursorPosition;
 	sf::Vector2i tileToSwap;
-
+	sf::Vector2i tileToSwap2;
 	sf::Clock clock;
 
 	void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos);

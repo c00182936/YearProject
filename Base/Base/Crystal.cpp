@@ -56,16 +56,16 @@ void Crystal::update()
 	{
 		if (animTime > 0)
 		{
+
+			animScale -= sf::Vector2f(scaleInc,scaleInc);
 			animTime--;
-			animScale.x - scaleInc;
-			animScale.y - scaleInc;
 		}
 		if (animTime <= 0)
 		{
 			//sprite.setColor(sf::Color(255,255,255,50));
 			//type = Colour::null;
-			toRemove = false;
-			
+			//toRemove = false;
+			animScale = sf::Vector2f(0.5, 0.5);
 		}
 
 	}
@@ -74,13 +74,13 @@ void Crystal::update()
 		if (animTime > 0)
 		{
 			animTime--;
-			animScale - animDir;
+			animScale -= animDir;
 		}
 		if (animTime <= 0)
 		{
 			//sprite.setColor(sf::Color(255,255,255,50));
-			
-			toSwap = false;
+			animScale = sf::Vector2f(0.5, 0.5);
+			//toSwap = false;
 			
 		}
 
@@ -142,7 +142,7 @@ void Crystal::setRemoveAnim()
 {
 	toRemove = true;
 	animTime = removeTiming;
-	scaleInc = 1 / animTime;
+	scaleInc = 0.5 / animTime;
 }
 
 void Crystal::setSwapAnim(sf::Vector2i dir)
@@ -151,7 +151,7 @@ void Crystal::setSwapAnim(sf::Vector2i dir)
 	animDir.y = dir.y;
 	toSwap = true;
 	animTime = swapTiming;
-	scaleInc = 1 / animTime;
+	scaleInc = 0.5 / animTime;
 	animDir.x*=scaleInc;
 	animDir.y *= scaleInc;
 }

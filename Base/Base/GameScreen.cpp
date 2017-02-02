@@ -18,7 +18,8 @@ void GameScreen::MarkChecked()
 		{
 			if (grid.at(i).at(u).checked == true)
 			{
-				grid.at(i).at(u).toRemove = true;
+				//grid.at(i).at(u).toRemove = true;
+				grid.at(i).at(u).setRemoveAnim();
 			}
 		}
 	}
@@ -66,6 +67,7 @@ GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeigh
 	sf::Vector2f tempPos(40,40);
 	cursorPosition = sf::Vector2i(1, 1);
 	cursor.setScale(0.5, 0.5);
+	cursor.setOrigin(50, 50);
 	if (!cursorTex.loadFromFile("Assets/Sprites/selector.png"))
 	{
 
@@ -90,6 +92,7 @@ GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeigh
 		tempPos += sf::Vector2f(50, -gridRows*50);
 	}
 	crystalSheet.setSmooth(true);
+	
 }
 
 std::string GameScreen::update(sf::RenderWindow & window)
@@ -200,7 +203,31 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		keydown = false;
 	}
 	cursor.setPosition(grid[cursorPosition.x][cursorPosition.y].getPos());
+	for (int i = 0; i < gridCols; i++)
+	{
+		for (int o = 0; o < gridRows; o++)
+		{
+			if (grid[i][o].animTime <= 0)
+			{
+				if (grid.at(i).at(o).getCol() == Colour::null&&o>0)
+				{
+					tileToSwap = sf::Vector2i(i, o);
+					SwapTile(sf::Vector2i(0, -1));
+					grid.at(i).at(o).updateTextures();
+				}
+				if (grid[i][o].toSwap == true)
+				{
+					//swapFinished(tileToSwap,tileToSwap2);
+					swapFinished(sf::Vector2i(i, o), grid.at(i).at(o).toSwapWith);
+				}
 
+				if (grid[i][o].toRemove == true)
+				{
+					removeFinished(sf::Vector2i(i,o));
+				}
+			}
+		}
+	}
 	return "";
 }
 
@@ -212,16 +239,13 @@ void GameScreen::draw(sf::RenderWindow & window)
 	{
 		for (int j = 0; j < gridRows; j++)
 		{//...and calls its Draw method.
-			if (grid.at(i).at(j).getCol() == Colour::null&&j>0)
-			{
-				tileToSwap = sf::Vector2i(i, j);
-				SwapTile(sf::Vector2i(0, -1));
-				grid.at(i).at(j).updateTextures();
-			}
+
 			grid[i][j].update();
 			
 			crystals.setTextureRect(sf::Rect<int>(100 * static_cast<int>(grid[i][j].getCol()), 0,100,100));
 			crystals.setPosition(grid[i][j].getPos());
+			crystals.setScale(grid[i][j].animScale);
+			crystals.setOrigin(50, 50);
 			window.draw(crystals);
 			//grid[i][j].draw(window);
 		}
@@ -381,17 +405,33 @@ std::pair<Colour, int> GameScreen::CheckMatch(sf::Vector2i check)
 void GameScreen::removeFinished(sf::Vector2i pos)
 {
 	grid.at(pos.x).at(pos.y).setCol(Colour::null);
+	grid.at(pos.x).at(pos.y).toRemove = false;
 }
 //complete
 void GameScreen::SwapTile(sf::Vector2i dir)
 {
 	//Simple swap action, creates a temp variable and uses it to swap colour values.
-	auto col = grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).getCol(); //Setting up the temp...
 
-	grid.at(tileToSwap.x+dir.x).at(tileToSwap.y+dir.y).setCol(grid.at(tileToSwap.x).at(tileToSwap.y).getCol()); //Copies one tile's colour over the other's.
-
-	grid.at(tileToSwap.x).at(tileToSwap.y).setCol(col); //Copies temp's colour over the first tile.
-
+	tileToSwap2 = tileToSwap + dir;
+	//auto col = grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).getCol(); //Setting up the temp...	
+	//
+	//grid.at(tileToSwap.x+dir.x).at(tileToSwap.y+dir.y).setCol(grid.at(tileToSwap.x).at(tileToSwap.y).getCol()); //Copies one tile's colour over the other's.
+	sf::Vector2i animDir;
+	if (dir.x != 0)
+	{
+		animDir.x = 1;
+	}
+	else if (dir.y != 0)
+	{
+		animDir.y = 1;
+	}
+	//grid.at(tileToSwap.x).at(tileToSwap.y).setCol(col); //Copies temp's colour over the first tile.
+	grid.at(tileToSwap.x).at(tileToSwap.y).setSwapAnim(animDir);
+	grid.at(tileToSwap.x).at(tileToSwap.y).toSwapWith=tileToSwap2;
+	grid.at(tileToSwap.x).at(tileToSwap.y).alreadySwapped = false;
+	grid.at(tileToSwap2.x).at(tileToSwap2.y).setSwapAnim(animDir);
+	grid.at(tileToSwap2.x).at(tileToSwap2.y).toSwapWith = tileToSwap;
+	grid.at(tileToSwap2.x).at(tileToSwap2.y).alreadySwapped = false;
 	//Now, to redraw the textures of both.
 
 	//grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).updateTextures();
@@ -399,16 +439,30 @@ void GameScreen::SwapTile(sf::Vector2i dir)
 	//grid.at(tileToSwap.x).at(tileToSwap.y).updateTextures();
 
 	//Resets control mode back to Move Mode
-	std::pair<Colour, int> temp=CheckMatch(tileToSwap);
-	p1.changeScore(temp.second,temp.first);
-	temp = CheckMatch(tileToSwap + dir);
-	p1.changeScore(temp.second, temp.first);
 	swapMode = false;
+
 }
 void GameScreen::swapFinished(sf::Vector2i pos1, sf::Vector2i pos2)
 {
+	if (grid.at(pos1.x).at(pos1.y).alreadySwapped == false)
+	{
+		auto col = grid.at(pos2.x).at(pos2.y).getCol(); //Setting up the temp...	
+
+		grid.at(pos2.x).at(pos2.y).setCol(grid.at(pos1.x).at(pos1.y).getCol()); //Copies one tile's colour over the other's.
+
+		grid.at(pos1.x).at(pos1.y).setCol(col); //Copies temp's colour over the first tile.
+		std::pair<Colour, int> temp = CheckMatch(tileToSwap);
+		p1.changeScore(temp.second, temp.first);
+		temp = CheckMatch(tileToSwap2);
+		p1.changeScore(temp.second, temp.first);
+		grid.at(pos2.x).at(pos2.y).alreadySwapped = true;
+		grid.at(pos1.x).at(pos1.y).alreadySwapped = true;
+		grid.at(pos2.x).at(pos2.y).updateTextures();
+		grid.at(pos1.x).at(pos1.y).updateTextures();
+	}
 
 }
+
 
 //defunct
 void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
