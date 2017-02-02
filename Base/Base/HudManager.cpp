@@ -58,7 +58,9 @@ void HudManager::Draw(sf::RenderWindow & win, Player player)
 	sf::Text gTimeText;
 	gTimeText.setFont(font);
 	gTimeText.setString(gTimeDisplay);
-	gTimeText.setCharacterSize(24);
+	gTimeText.setCharacterSize(40);
+	gTimeText.setOutlineColor(sf::Color::Black);
+	gTimeText.setOutlineThickness(1);
 	if (minutes == 0)
 	{
 		gTimeText.setFillColor(sf::Color::Red);

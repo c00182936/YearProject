@@ -32,7 +32,8 @@ private:
 	void resetNull();
 
 	void MarkChecked();
-
+	void swapFinished(sf::Vector2i pos1, sf::Vector2i pos2);
+	void removeFinished(sf::Vector2i pos);
 
 	HudManager hud;
 	Player p1;

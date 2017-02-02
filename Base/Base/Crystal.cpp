@@ -1,5 +1,6 @@
 #include "Crystal.h"
 
+
 Crystal::Crystal()
 {//By default, randomly selects a colour for the crystal.
 	int ranType = rand() % 3;
@@ -50,19 +51,37 @@ Crystal::Crystal(sf::Vector2f pos):position(pos)
 }
 
 void Crystal::update()
-{
+{//find scaling factor, reduce on the axis that are listed
 	if (toRemove == true)
 	{
-		if (removeTiming > 0)
+		if (animTime > 0)
 		{
-			removeTiming--;
+			animTime--;
+			animScale.x - scaleInc;
+			animScale.y - scaleInc;
 		}
-		if (removeTiming <= 0)
+		if (animTime <= 0)
 		{
 			//sprite.setColor(sf::Color(255,255,255,50));
-			type = Colour::null;
+			//type = Colour::null;
 			toRemove = false;
-			removeTiming = removeAnim;
+			
+		}
+
+	}
+	else if (toSwap == true)
+	{
+		if (animTime > 0)
+		{
+			animTime--;
+			animScale - animDir;
+		}
+		if (animTime <= 0)
+		{
+			//sprite.setColor(sf::Color(255,255,255,50));
+			
+			toSwap = false;
+			
 		}
 
 	}
@@ -99,25 +118,42 @@ sf::Vector2f & Crystal::getPos()
 
 void Crystal::updateTextures()
 {
-	if (type == Colour::Red)
-	{
-		//sprite.setColor(sf::Color::White);
-		tile.loadFromFile("Assets/Sprites/garnet.png");
-	}
-	else if (type == Colour::Green)
-	{
-		//sprite.setColor(sf::Color::White);
-		tile.loadFromFile("Assets/Sprites/peridot.png");
-	}
-	else if (type == Colour::Blue)
-	{
-		//sprite.setColor(sf::Color::White);
-		tile.loadFromFile("Assets/Sprites/sapphire.png");
-	}
-	else if (type == Colour::null)
+	//if (type == Colour::Red)
+	//{
+	//	//sprite.setColor(sf::Color::White);
+	//	tile.loadFromFile("Assets/Sprites/garnet.png");
+	//}
+	//else if (type == Colour::Green)
+	//{
+	//	//sprite.setColor(sf::Color::White);
+	//	tile.loadFromFile("Assets/Sprites/peridot.png");
+	//}
+	//else if (type == Colour::Blue)
+	//{
+	//	//sprite.setColor(sf::Color::White);
+	//	tile.loadFromFile("Assets/Sprites/sapphire.png");
+	//}
+	if (type == Colour::null)
 	{
 		sprite.setColor(sf::Color(255, 255, 255, 0));
 	}
+}
+void Crystal::setRemoveAnim()
+{
+	toRemove = true;
+	animTime = removeTiming;
+	scaleInc = 1 / animTime;
+}
+
+void Crystal::setSwapAnim(sf::Vector2i dir)
+{
+	animDir.x = dir.x;
+	animDir.y = dir.y;
+	toSwap = true;
+	animTime = swapTiming;
+	scaleInc = 1 / animTime;
+	animDir.x*=scaleInc;
+	animDir.y *= scaleInc;
 }
 
 Crystal::~Crystal()

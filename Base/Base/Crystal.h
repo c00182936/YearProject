@@ -10,9 +10,16 @@ private:
 	sf::Texture tile;
 	sf::Sprite sprite;
 	sf::Vector2f position;
-	int removeTiming = 30;
+	int removeTiming = 20;
+	int swapTiming = 10;
+	float scaleInc=0;
 public:
-	int removeAnim = 30;
+	int animTime;
+	sf::Vector2f animDir;//[1]shrink on the x, [1] shrink on the y;
+	sf::Vector2f animScale=sf::Vector2f(1,1);
+	void setRemoveAnim();
+	void setSwapAnim(sf::Vector2i dir);
+	
 	Crystal();
 	Crystal(Colour colour);
 	Crystal(sf::Vector2f pos);
@@ -24,5 +31,8 @@ public:
 	void updateTextures();
 	bool checked=false;
 	bool toRemove=false;
+	bool toSwap=false;
+	bool removeAnim = false;
+
 	~Crystal();
 };

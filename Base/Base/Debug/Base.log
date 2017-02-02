@@ -1,8 +1,8 @@
-﻿  Player.cpp
-c:\users\gameuser\yearproject\base\base\player.cpp(30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\gameuser\yearproject\base\base\player.cpp(32): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-c:\users\gameuser\yearproject\base\base\player.cpp(77): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-c:\users\gameuser\yearproject\base\base\player.cpp(79): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-c:\users\gameuser\yearproject\base\base\player.cpp(234): warning C4715: 'Player::getAP': not all control paths return a value
-  Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.exe
-  Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.pdb (Partial PDB)
+﻿  Crystal.cpp
+g:\git\project\yearproject\base\base\crystal.cpp(60): warning C4552: '-': operator has no effect; expected operator with side-effect
+g:\git\project\yearproject\base\base\crystal.cpp(61): warning C4552: '-': operator has no effect; expected operator with side-effect
+g:\git\project\yearproject\base\base\crystal.cpp(145): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+g:\git\project\yearproject\base\base\crystal.cpp(150): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+g:\git\project\yearproject\base\base\crystal.cpp(151): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+g:\git\project\yearproject\base\base\crystal.cpp(154): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+LINK : fatal error LNK1104: cannot open file 'G:\git\project\YearProject\Base\Debug\Base.ilk'

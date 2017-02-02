@@ -24,6 +24,8 @@ void GameScreen::MarkChecked()
 	}
 }
 
+
+
 GameScreen::GameScreen()
 {
 	gridCols = 10;
@@ -87,6 +89,7 @@ GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeigh
 		grid.push_back(temp);
 		tempPos += sf::Vector2f(50, -gridRows*50);
 	}
+	crystalSheet.setSmooth(true);
 }
 
 std::string GameScreen::update(sf::RenderWindow & window)
@@ -197,6 +200,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		keydown = false;
 	}
 	cursor.setPosition(grid[cursorPosition.x][cursorPosition.y].getPos());
+
 	return "";
 }
 
@@ -374,6 +378,10 @@ std::pair<Colour, int> GameScreen::CheckMatch(sf::Vector2i check)
 	resetChecked();
 	return toReturn;
 }
+void GameScreen::removeFinished(sf::Vector2i pos)
+{
+	grid.at(pos.x).at(pos.y).setCol(Colour::null);
+}
 //complete
 void GameScreen::SwapTile(sf::Vector2i dir)
 {
@@ -386,9 +394,9 @@ void GameScreen::SwapTile(sf::Vector2i dir)
 
 	//Now, to redraw the textures of both.
 
-	grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).updateTextures();
+	//grid.at(tileToSwap.x + dir.x).at(tileToSwap.y + dir.y).updateTextures();
 
-	grid.at(tileToSwap.x).at(tileToSwap.y).updateTextures();
+	//grid.at(tileToSwap.x).at(tileToSwap.y).updateTextures();
 
 	//Resets control mode back to Move Mode
 	std::pair<Colour, int> temp=CheckMatch(tileToSwap);
@@ -397,6 +405,11 @@ void GameScreen::SwapTile(sf::Vector2i dir)
 	p1.changeScore(temp.second, temp.first);
 	swapMode = false;
 }
+void GameScreen::swapFinished(sf::Vector2i pos1, sf::Vector2i pos2)
+{
+
+}
+
 //defunct
 void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
 {

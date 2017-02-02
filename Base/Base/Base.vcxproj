@@ -70,7 +70,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SFML_SDK)\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SFML_SDK)\include;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SFML_SDK)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SFML_SDK)\include;$(IncludePath)</IncludePath>
@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="ButtonManager.cpp" />
     <ClCompile Include="Crystal.cpp" />
+    <ClCompile Include="GameOverScreen.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="HudManager.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="ButtonManager.h" />
     <ClInclude Include="Crystal.h" />
+    <ClInclude Include="GameOverScreen.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="HudManager.h" />
     <ClInclude Include="MainMenu.h" />
