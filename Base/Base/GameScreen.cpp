@@ -54,6 +54,7 @@ GameScreen::GameScreen()
 			//grid[i][j] = new Crystal();
 		}
 		grid.push_back(temp);
+		prevGrid.push_back(temp);
 		tempPos += sf::Vector2f(50, -gridRows * 50);
 	}
 
@@ -89,6 +90,7 @@ GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeigh
 			//grid[i][j] = new Crystal();
 		}
 		grid.push_back(temp);
+		prevGrid.push_back(temp);
 		tempPos += sf::Vector2f(50, -gridRows*50);
 	}
 	crystalSheet.setSmooth(true);
@@ -113,6 +115,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			if (cursorPosition.x > 0) {
 				if (swapMode == true)
 				{
+					updatePrevious();
 					SwapTile(sf::Vector2i(-1,0));
 				}
 				else
@@ -125,6 +128,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			if (cursorPosition.x < gridRows - 1) {
 				if (swapMode == true)
 				{
+					updatePrevious();
 					SwapTile(sf::Vector2i(1,0));
 				}
 				else
@@ -138,6 +142,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			{
 				if (swapMode == true)
 				{
+					updatePrevious();
 					SwapTile(sf::Vector2i(0, 1));
 				}
 				else
@@ -151,6 +156,7 @@ std::string GameScreen::update(sf::RenderWindow & window)
 			{
 				if (swapMode == true)
 				{
+					updatePrevious();
 					SwapTile(sf::Vector2i(0, -1));
 				}
 				else
@@ -177,24 +183,34 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		//Added temporarily for the purpose of testing Ability Points.
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			{ p1.changeAP("Red", -100); }
-			else
-			{ p1.changeAP("Red", 20); }
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) { 
+				p1.fever(true); 
+			}
+			else { 
+				p1.fever(false); 
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			{ p1.changeAP("Green", -100); }
-			else
-			{ p1.changeAP("Green", 20); }
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) { 
+				p1.changeAP("Green", -300); 
+			}
+			else { 
+				p1.changeAP("Green", -100); 
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-			{ p1.changeAP("Blue", -100); }
-			else
-			{ p1.changeAP("Blue", 20); }
+			bool confirmReverse = false;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) {
+				confirmReverse = p1.reverse(true);
+			}
+			else {
+				confirmReverse = p1.reverse(false);
+			}
+			if (confirmReverse) {
+				reverse();
+			}
 		}
 
 	}
@@ -260,6 +276,19 @@ int GameScreen::getScoreFromPlayer()
 {
 	return p1.getScore();
 }
+
+void GameScreen::reverse() {
+	//For each tile in grid, revert to previous state.
+	for (int i = 0; i < gridCols; i++)
+	{
+		for (int j = 0; j < gridRows; j++)
+		{
+			grid.at(i).at(j).setCol(prevGrid.at(i).at(j).getCol());
+			grid.at(i).at(j).updateTextures();
+		}
+	}
+}
+
 //complete
 std::pair<Colour, int> GameScreen::CheckMatch(sf::Vector2i check)
 {
@@ -480,6 +509,18 @@ void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
 
 	grid.at(pos.x).at(pos.y).updateTextures();
 
+}
+
+void GameScreen::updatePrevious() {
+	p1.updatePrevious();
+
+	for (int i = 0; i < gridCols; i++)
+	{
+		for (int j = 0; j < gridRows; j++)
+		{
+			prevGrid.at(i).at(j).setCol(grid.at(i).at(j).getCol());
+		}
+	}
 }
 
 void GameScreen::resetNull() 
