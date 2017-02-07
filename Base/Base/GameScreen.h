@@ -14,6 +14,7 @@ class GameScreen
 private:
 	ButtonManager button;
 	std::vector< std::vector<Crystal> > grid;
+	std::vector< std::vector<Crystal> > prevGrid;
 	sf::Sprite cursor;
 	sf::Sprite crystals;
 	sf::Texture crystalSheet;
@@ -30,6 +31,8 @@ private:
 	int gridRows;
 	void resetChecked();
 	void resetNull();
+	void updatePrevious();
+	void reverse();
 
 	void MarkChecked();
 	void swapFinished(sf::Vector2i pos1, sf::Vector2i pos2);
