@@ -5,6 +5,7 @@ Player::Player()
 {//By default, game time starts at 300,000ms, or five minutes.	int a = 69;
 	gameTime = sf::seconds(300);
 	comboTime = sf::seconds(0);
+	feverTime = sf::seconds(0);
 	rCharge = 0; gCharge = 0; bCharge = 0;
 	score = 0;
 	prevScore = 0;
@@ -241,7 +242,11 @@ std::string Player::update(sf::Time interval)
 {
 	std::string message = "";
 	gameTime -= interval;
-	if (comboTime.asSeconds() > 0)
+	if (feverTime.asSeconds() > 0) 
+	{
+		feverTime -= interval;
+	}
+	if (comboTime.asSeconds() > 0 && feverTime.asSeconds() <= 0)
 	{
 		comboTime -= interval;
 	}
@@ -265,19 +270,22 @@ std::string Player::update(sf::Time interval)
 
 void Player::fever(bool ex)
 {
-	if (ex) {//If using the advanced form of Fever.
-		if (getAP("Red") == 300) {//Requires a full three bars. Costs all AP, sets Fever timer and activates EX bool.
-								  //For a short time, prevents combo timer from decreasing and triples combo counter increment rate.
-			changeAP("Red", -300);
-			feverTime = sf::seconds(5);
-			feverEX = true;
+	if (feverTime.asSeconds() <= 0)
+	{//Only works if Fever isn't already active.
+		if (ex) {//If using the advanced form of Fever.
+			if (getAP("Red") == 300) {//Requires a full three bars. Costs all AP, sets Fever timer and activates EX bool.
+				//For a short time, prevents combo timer from decreasing and triples combo counter increment rate.
+				changeAP("Red", -300);
+				feverTime = sf::seconds(5);
+				feverEX = true;
+			}
 		}
-	}
-	else {//If using the normal form.
-		if (getAP("Red") >= 100) {//Requires one bar. Costs one bar and sets Fever timer.
-								  //For a short time, prevents the combo timer from decreasing to give a little extra time to continue the combo.
-			changeAP("Red", -100);
-			feverTime = sf::seconds(5);
+		else {//If using the normal form.
+			if (getAP("Red") >= 100) {//Requires one bar. Costs one bar and sets Fever timer.
+				//For a short time, prevents the combo timer from decreasing to give a little extra time to continue the combo.
+				changeAP("Red", -100);
+				feverTime = sf::seconds(5);
+			}
 		}
 	}
 }
