@@ -37,6 +37,7 @@ public:
 	float getComboLV();
 	void fever(bool ex);
 	bool reverse(bool ex);
+	void timeBonus(bool ex);
 	void updatePrevious();
 	bool getFeverLV();
 	sf::Time getComboTime();
