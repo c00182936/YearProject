@@ -322,6 +322,21 @@ bool Player::reverse(bool ex)
 	}
 }
 
+void Player::timeBonus(bool ex) {
+	if (ex) {
+		if (getAP("Green") == 300) {//Requires a full three bars. Costs all AP, greatly increases time remaining.
+			changeAP("Green", -300);
+			gameTime = sf::seconds(gameTime.asSeconds() + 30);
+		}
+	}
+	else {
+		if (getAP("Green") >= 100) {//Requires one bar. Costs one bar, slightly increases time remaining.
+			changeAP("Green", -100);
+			gameTime = sf::seconds(gameTime.asSeconds() + 5);
+		}
+	}
+}
+
 void Player::updatePrevious() {
 	if (!reverseAvailable) {
 		reverseAvailable = true;
