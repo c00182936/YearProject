@@ -193,10 +193,10 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) { 
-				p1.changeAP("Green", -300); 
+				p1.timeBonus(true);
 			}
 			else { 
-				p1.changeAP("Green", -100); 
+				p1.timeBonus(false);
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
