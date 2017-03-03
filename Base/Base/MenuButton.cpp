@@ -1,11 +1,15 @@
 #include "MenuButton.h"
 #include <iostream>
 
-
+////////////////////////////
+//default constructor
+///////////////////////////
 MenuButton::MenuButton()
 {
 }
-
+///////////////////////////////
+//used constructor, accepts the position, title and location of the sprite, sets positions and collision rectangle
+//////////////////////////////
 MenuButton::MenuButton(std::string title, std::string spriteLocation, sf::Vector2f pos):action(title)
 {
 	if (!tex.loadFromFile(spriteLocation))
@@ -23,7 +27,9 @@ MenuButton::MenuButton(std::string title, std::string spriteLocation, sf::Vector
 	text.setString(action);
 	text.setPosition(pos + sf::Vector2f(25, 25));
 }
-
+///////////////////////
+//checks if a mouse is over the button
+//////////////////////
 bool MenuButton::checkOver(sf::Vector2f &mousePos)
 {
 	bool y;
@@ -31,23 +37,31 @@ bool MenuButton::checkOver(sf::Vector2f &mousePos)
 	y = rect.contains(mousePos.x, mousePos.y);
 	return y;
 }
-
+/////////////////////
+//returns if the button is selected or not
+/////////////////////
 bool * MenuButton::getSelected()
 {
 	return &selected;
 }
-
+///////////////////////
+//returns the action of the button
+///////////////////////
 const std::string * MenuButton::getAction()
 {
 	return &action;
 }
-
+///////////////////////
+//returns the sprite
+///////////////////////
 sf::Sprite & MenuButton::getSprite()
 {
 	// TODO: insert return statement here
 	return sprite;
 }
-
+////////////////////////
+// draw method
+///////////////////////
 void MenuButton::draw(sf::RenderWindow & win)
 {
 	sprite.setTexture(tex);
@@ -56,7 +70,9 @@ void MenuButton::draw(sf::RenderWindow & win)
 	win.draw(text);
 }
 
-
+////////////////////////
+//destructor
+/////////////////////////
 MenuButton::~MenuButton()
 {
 }

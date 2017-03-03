@@ -1,13 +1,17 @@
 #include "ButtonManager.h"
 
 
-
+///////////////////
+//default constructor
+///////////////////
 ButtonManager::ButtonManager()
 {
 
 
 }
-
+//////////////////
+//update loop, when buttons are pressed, it will return a string of an action to be interpreted by managers
+//////////////////
 std::string ButtonManager::update(sf::RenderWindow &win)
 {
 
@@ -31,7 +35,9 @@ std::string ButtonManager::update(sf::RenderWindow &win)
 	}
 	return currentMessage;
 }
-
+////////////////////////
+//draws the buttons
+///////////////////////
 void ButtonManager::draw(sf::RenderWindow & win)
 {
 	for (int i = 0; i < ButtonVector.size(); i++)
@@ -39,19 +45,25 @@ void ButtonManager::draw(sf::RenderWindow & win)
 		ButtonVector[i].draw(win);
 	}
 }
-
+/////////////////////////
+// returns the string when selected
+////////////////////////
 std::string ButtonManager::SelectButton()
 {
 	return std::string();
 }
-
+///////////////////////
+//adds a button 
+///////////////////////
 void ButtonManager::AddButton(std::string title, sf::Vector2f position, std::string location)
 {
 	
 	ButtonVector.push_back(MenuButton(title, location, position));
 }
-
-
+///////////////////////
+// destructor
+///////////////////
 ButtonManager::~ButtonManager()
 {
+	ButtonVector.clear();
 }

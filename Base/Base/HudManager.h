@@ -5,23 +5,40 @@
 class HudManager
 {
 public:
+	////////////////////////////////////////////////////////////
+	/// \brief Default Constructor
+	///
+	/// \param None
+	////////////////////////////////////////////////////////////
 	HudManager();
 
+	////////////////////////////////////////////////////////////
+	/// \brief Draw and fill the bars, and display game elements.
+	///
+	/// \param Window to draw on, player's stats are referenced.
+	////////////////////////////////////////////////////////////
 	void Draw(sf::RenderWindow & win, Player player);
 
+	////////////////////////////////////////////////////////////
+	/// \brief Destructor Function
+	///
+	/// \param None
+	////////////////////////////////////////////////////////////
 	~HudManager();
-private:
-	int point;
-	sf::VertexArray a;
 
+private:
+	///Font used to display time/combo/score.
 	sf::Font font;
 
+	///Positions at which each bar should be drawn.
 	sf::Vector2f rBarPos;
 	sf::Vector2f gBarPos;
 	sf::Vector2f bBarPos;
-	//const sf::Vector2i BAR_OFFSET = sf::Vector2i(5,5);
 
+	///Black bar texture with multiple segments.
 	sf::Texture apBarBack;
+
+	///Rectangles drawn over the black bars to fill.
 	sf::Sprite rGauge, gGauge, bGauge;
 };
 

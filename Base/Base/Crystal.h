@@ -10,7 +10,7 @@ private:
 	sf::Texture tile;
 	sf::Sprite sprite;
 	sf::Vector2f position;
-	int removeTiming = 15;
+	int removeTiming = 10;
 	int swapTiming = 8;
 	float scaleInc=0;
 public:

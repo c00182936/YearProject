@@ -1,12 +1,16 @@
 #include "GameOverScreen.h"
 #include <iostream>
-
+////////////////////////
+// default constructor
+////////////////////////
 
 GameOverScreen::GameOverScreen()
 {
 	s = "default";
 }
-
+//////////////////////////
+// constructor, sets score to a string to display
+/////////////////////////
 GameOverScreen::GameOverScreen(int score)
 {
 	s = "Thanks for playing! your score: " + std::to_string(score);
@@ -19,7 +23,9 @@ GameOverScreen::GameOverScreen(int score)
 
 
 }
-
+//////////////////////
+//draws the update loop
+//////////////////////
 void GameOverScreen::Draw(sf::RenderWindow & win)
 {
 	spr.setTexture(tex);
@@ -28,13 +34,17 @@ void GameOverScreen::Draw(sf::RenderWindow & win)
 	win.draw(spr);
 	win.draw(message);
 }
-
+/////////////////////
+//update loop
+/////////////////////
 std::string GameOverScreen::update()
 {
 	return std::string();
 }
 
-
+////////////////////
+// destructor
+////////////////////
 GameOverScreen::~GameOverScreen()
 {
 }

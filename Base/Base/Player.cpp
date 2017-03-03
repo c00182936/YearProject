@@ -1,8 +1,11 @@
 #include "Player.h"
 #include <iostream>
 
+//////////////////////////////////////////////////////////////////////////////////
+// Constructor
+//////////////////////////////////////////////////////////////////////////////////
 Player::Player()
-{//By default, game time starts at 300,000ms, or five minutes.	int a = 69;
+{//By default, game time starts at 300,000ms, or five minutes.
 	gameTime = sf::seconds(300);
 	comboTime = sf::seconds(0);
 	feverTime = sf::seconds(0);
@@ -14,6 +17,9 @@ Player::Player()
 	reverseAvailable = false;
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Modified constructor.
+//////////////////////////////////////////////////////////////////////////////////
 Player::Player(sf::Time gTime) : gameTime(gTime)
 {
 	gameTime = sf::seconds(300);
@@ -24,51 +30,9 @@ Player::Player(sf::Time gTime) : gameTime(gTime)
 	comboLevel = 1;
 }
 
-void Player::changeScore(int length, std::string colour)
-{
-
-	//Calculating point gain.
-	int ptsGain = 0;
-	for (int i = 1; i <= length; i++)
-	{
-		ptsGain += i * 100;
-	}
-
-	int apGain = ptsGain * 0.1;
-
-	ptsGain *= comboLevel;
-
-	//Increases total score.
-	score += ptsGain;
-
-	//Increases ability charge and combo counter if applicable.
-
-	if (colour == "Red" && ptsGain > 0)
-	{
-		rCharge += apGain;
-		comboLevel += 1.5;
-	}
-
-	else if (colour == "Green" && ptsGain > 0)
-	{
-		gCharge += apGain;
-		comboLevel += 1;
-	}
-
-	else if (colour == "Blue" && ptsGain > 0)
-	{
-		bCharge += apGain;
-		comboLevel += 1;
-	}
-	else
-	{
-		comboLevel += 1;
-	}
-	//Reset combo timer.
-
-	comboTime = sf::seconds(10);
-
-}
+//////////////////////////////////////////////////////////////////////////////////
+// Used to add points to the player's score.
+//////////////////////////////////////////////////////////////////////////////////
 void Player::changeScore(int length, Colour colour)
 {
 	//Calculating point gain.
@@ -157,6 +121,10 @@ void Player::changeScore(int length, Colour colour)
 	}
 
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+// Alters the current ability point value for the specified ability.
+//////////////////////////////////////////////////////////////////////////////////
 void Player::changeAP(std::string colour, int apGain)
 {//Temporary method for testing purposes, might be removed later. 
  //Added so that AP can be increased/decreased without messing with the score.
@@ -197,47 +165,10 @@ void Player::changeAP(std::string colour, int apGain)
 		}
 	}
 }
-void Player::changeAP(Colour colour, int apGain)
-{//Temporary method for testing purposes, might be removed later. 
- //Added so that AP can be increased/decreased without messing with the score.
-	if (colour == Colour::Red)
-	{
-		rCharge += apGain;
-		if (rCharge > 300)
-		{
-			rCharge = 300;
-		}
-		else if (rCharge < 0)
-		{
-			rCharge = 0;
-		}
-	}
-	else if (colour == Colour::Green)
-	{
-		gCharge += apGain;
-		if (gCharge > 300)
-		{
-			gCharge = 300;
-		}
-		else if (gCharge < 0)
-		{
-			gCharge = 0;
-		}
-	}
-	else if (colour == Colour::Blue)
-	{
-		bCharge += apGain;
-		if (bCharge > 300)
-		{
-			bCharge = 300;
-		}
-		else if (bCharge < 0)
-		{
-			bCharge = 0;
-		}
-	}
-}
 
+//////////////////////////////////////////////////////////////////////////////////
+// Updates all in-game timers.
+//////////////////////////////////////////////////////////////////////////////////
 std::string Player::update(sf::Time interval)
 {
 	std::string message = "";
@@ -268,6 +199,9 @@ std::string Player::update(sf::Time interval)
 	return message;
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Consumes red ability points to boost the combo.
+//////////////////////////////////////////////////////////////////////////////////
 void Player::fever(bool ex)
 {
 	if (feverTime.asSeconds() <= 0)
@@ -290,6 +224,9 @@ void Player::fever(bool ex)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Consumes blue ability points to undo the last move.
+//////////////////////////////////////////////////////////////////////////////////
 bool Player::reverse(bool ex)
 {
 	std::cout << "in reverse" << std::endl;
@@ -322,6 +259,9 @@ bool Player::reverse(bool ex)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Consumes green ability points to add game time.
+//////////////////////////////////////////////////////////////////////////////////
 void Player::timeBonus(bool ex) {
 	if (ex) {
 		if (getAP("Green") == 300) {//Requires a full three bars. Costs all AP, greatly increases time remaining.
@@ -337,6 +277,9 @@ void Player::timeBonus(bool ex) {
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Before each move, sets "previous" values equal to current ones.
+//////////////////////////////////////////////////////////////////////////////////
 void Player::updatePrevious() {
 	if (!reverseAvailable) {
 		reverseAvailable = true;
@@ -345,10 +288,17 @@ void Player::updatePrevious() {
 	prevComboLevel = comboLevel;
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Returns the player's current score.
+//////////////////////////////////////////////////////////////////////////////////
 int Player::getScore()
 {
 	return score;
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns ability points for the specified ability.
+//////////////////////////////////////////////////////////////////////////////////
 int Player::getAP(std::string colour)
 {
 	if (colour == "Red")
@@ -368,21 +318,34 @@ int Player::getAP(std::string colour)
 		//Wrong colour input.
 	}
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+// Returns the current combo level.
+//////////////////////////////////////////////////////////////////////////////////
 float Player::getComboLV()
 {
 	return comboLevel;
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Returns number of seconds until combo ends.
+//////////////////////////////////////////////////////////////////////////////////
 sf::Time Player::getComboTime()
 {
 	return comboTime;
 }
-sf::Time Player::getGameTime()
 
+//////////////////////////////////////////////////////////////////////////////////
+// Returns number of seconds until game ends.
+//////////////////////////////////////////////////////////////////////////////////
+sf::Time Player::getGameTime()
 {
 	return gameTime;
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// Returns whether or not Fever is active in any form.
+//////////////////////////////////////////////////////////////////////////////////
 bool Player::getFeverLV()
 {
 	return (feverTime.asSeconds() > 0);

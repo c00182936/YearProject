@@ -1,5 +1,7 @@
 #include "GameScreen.h"
-
+///////////////////////////////
+// resets all the tiles to not be checked
+///////////////////////////////
 void GameScreen::resetChecked()
 {
 	for (size_t i = 0; i < gridCols; i++)
@@ -10,6 +12,9 @@ void GameScreen::resetChecked()
 		}
 	}
 }
+////////////////////////////
+//marks the checked tiles to play an animation to remove
+////////////////////////////
 void GameScreen::MarkChecked()
 {
 	for (size_t i = 0; i < gridCols; i++)
@@ -26,7 +31,9 @@ void GameScreen::MarkChecked()
 }
 
 
-
+//////////////////////////////////
+//default constructor
+//////////////////////////////////
 GameScreen::GameScreen()
 {
 	gridCols = 10;
@@ -61,7 +68,9 @@ GameScreen::GameScreen()
 	p1 = Player();
 	//hud = HudManager();
 }
-
+/////////////////////////////////////////////
+// standard constructor
+/////////////////////////////////////////////
 GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeight), gridRows(gridWidth)
 {
 	std::vector<Crystal> temp;
@@ -96,7 +105,9 @@ GameScreen::GameScreen(int gridHeight=10, int gridWidth=10) : gridCols(gridHeigh
 	crystalSheet.setSmooth(true);
 	
 }
-
+///////////////////////////////////////////
+//updates the aspects of this class, returns a message if something happens
+///////////////////////////////////////////
 std::string GameScreen::update(sf::RenderWindow & window)
 {
 	std::string message=p1.update(clock.restart());
@@ -193,10 +204,10 @@ std::string GameScreen::update(sf::RenderWindow & window)
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) { 
-				p1.timeBonus(true);
+				p1.changeAP("Green", -300); 
 			}
 			else { 
-				p1.timeBonus(false);
+				p1.changeAP("Green", -100); 
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
@@ -246,7 +257,9 @@ std::string GameScreen::update(sf::RenderWindow & window)
 	}
 	return "";
 }
-
+//////////////////////////////
+// the draw method of this class
+//////////////////////////////
 void GameScreen::draw(sf::RenderWindow & window)
 {
 	crystals.setTexture(crystalSheet);
@@ -272,11 +285,16 @@ void GameScreen::draw(sf::RenderWindow & window)
 
 	hud.Draw(window, p1);
 }
+///////////////////////////////
+//returns the score from the player container
+///////////////////////////////
 int GameScreen::getScoreFromPlayer()
 {
 	return p1.getScore();
 }
-
+//////////////////////////////////////
+//reverts the current grid to a previous grid
+//////////////////////////////////////
 void GameScreen::reverse() {
 	//For each tile in grid, revert to previous state.
 	for (int i = 0; i < gridCols; i++)
@@ -289,7 +307,9 @@ void GameScreen::reverse() {
 	}
 }
 
-//complete
+////////////////////////////
+//a non recursive method to mark all the matching tiles around the tile to be checked
+////////////////////////////
 std::pair<Colour, int> GameScreen::CheckMatch(sf::Vector2i check)
 {
 	
@@ -431,12 +451,18 @@ std::pair<Colour, int> GameScreen::CheckMatch(sf::Vector2i check)
 	resetChecked();
 	return toReturn;
 }
+///////////////////////////
+//removes tiles once their animation is finished
+///////////////////////////
 void GameScreen::removeFinished(sf::Vector2i pos)
 {
 	grid.at(pos.x).at(pos.y).setCol(Colour::null);
 	grid.at(pos.x).at(pos.y).toRemove = false;
 }
 //complete
+//////////////////////////
+//swaps tiles
+/////////////////////////
 void GameScreen::SwapTile(sf::Vector2i dir)
 {
 	//Simple swap action, creates a temp variable and uses it to swap colour values.
@@ -471,6 +497,9 @@ void GameScreen::SwapTile(sf::Vector2i dir)
 	swapMode = false;
 
 }
+//////////////////////////////
+//swaps tiles when their animation is finished
+/////////////////////////////
 void GameScreen::swapFinished(sf::Vector2i pos1, sf::Vector2i pos2)
 {
 	if (grid.at(pos1.x).at(pos1.y).alreadySwapped == false)
@@ -493,7 +522,9 @@ void GameScreen::swapFinished(sf::Vector2i pos1, sf::Vector2i pos2)
 }
 
 
-//defunct
+/////////////////////////////////
+//depreciated method that swaps tiles without checking for a match
+////////////////////////////////
 void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
 {
 	//Simple swap action, creates a temp variable and uses it to swap colour values.
@@ -510,7 +541,9 @@ void GameScreen::SwapTileWithoutCheck(sf::Vector2i dir, sf::Vector2i pos)
 	grid.at(pos.x).at(pos.y).updateTextures();
 
 }
-
+//////////////////////
+//updates the previous grid from the current grid
+//////////////////////
 void GameScreen::updatePrevious() {
 	p1.updatePrevious();
 
@@ -522,7 +555,9 @@ void GameScreen::updatePrevious() {
 		}
 	}
 }
-
+////////////////////////
+//reset the null tiles to a random tile
+////////////////////////
 void GameScreen::resetNull() 
 {//Resets the top row of tiles to random colours.
 	//Issue: Top row doesn't draw correctly for some reason.
@@ -530,13 +565,15 @@ void GameScreen::resetNull()
 	{
 		if (grid.at(i).at(0).getCol() == Colour::null)
 		{
-			Colour col = static_cast<Colour>(rand() % 3); //Will change this to include later colours once added.
+			Colour col = static_cast<Colour>(rand() % level); //Will change this to include later colours once added.
 			grid.at(i).at(0).setCol(col);
 			grid.at(i).at(0).updateTextures();
 		}
 	}
 }
-
+/////////////////////////
+//compares two tiles to see if their colours match
+/////////////////////////
 bool GameScreen::compareTiles(Crystal & a, Crystal & b)
 {//Checks if "type" value of both Crystals are identical.
 	if (a.getCol() == b.getCol())
@@ -545,7 +582,11 @@ bool GameScreen::compareTiles(Crystal & a, Crystal & b)
 	}
 	return false;
 }
-
+/////////////////////////
+//destructor
+////////////////////////
 GameScreen::~GameScreen()
 {
+	grid.clear();
+	prevGrid.clear();
 }

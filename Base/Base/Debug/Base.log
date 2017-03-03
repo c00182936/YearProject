@@ -1,13 +1,28 @@
-﻿  Crystal.cpp
-c:\users\gameuser\yearproject\base\base\crystal.cpp(145): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\gameuser\yearproject\base\base\crystal.cpp(150): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\gameuser\yearproject\base\base\crystal.cpp(151): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\gameuser\yearproject\base\base\crystal.cpp(154): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  Player.cpp
+c:\users\gameuser\yearproject\base\base\player.cpp(37): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\gameuser\yearproject\base\base\player.cpp(39): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
+c:\users\gameuser\yearproject\base\base\player.cpp(84): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\gameuser\yearproject\base\base\player.cpp(86): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
+  HudManager.cpp
+c:\users\gameuser\yearproject\base\base\hudmanager.cpp(39): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\gameuser\yearproject\base\base\hudmanager.cpp(157): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\gameuser\yearproject\base\base\hudmanager.cpp(160): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\gameuser\yearproject\base\base\hudmanager.cpp(163): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  GameScreen.cpp
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(5): warning C4018: '<': signed/unsigned mismatch
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(7): warning C4018: '<': signed/unsigned mismatch
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(15): warning C4018: '<': signed/unsigned mismatch
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(17): warning C4018: '<': signed/unsigned mismatch
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(94): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\gameuser\yearproject\base\base\gamescreen.cpp(310): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
-  Skipping... (no relevant changes detected)
+c:\users\gameuser\yearproject\base\base\player.cpp(355): warning C4715: 'Player::getAP': not all control paths return a value
+  Compiling...
   ScreenManager.cpp
   MainMenu.cpp
   Main.cpp
-  GameScreen.cpp
+  Generating Code...
+  LINK : C:\Users\gameuser\YearProject\Base\Debug\Base.exe not found or not built by the last incremental link; performing full link
   Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.exe
   Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Debug\Base.pdb (Partial PDB)

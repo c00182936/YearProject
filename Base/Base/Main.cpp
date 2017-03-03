@@ -11,9 +11,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "My window");
 	window.setFramerateLimit(30);
 	sf::Texture sprite;
-	//MenuButton butn = MenuButton("cumberbumber", "Assets/Sprites/play.png", sf::FloatRect(30, 30, 100, 300));
-	//ButtonManager btn = ButtonManager();
-	//MainMenu menu = MainMenu("Menu");
+
 	ScreenManager manager = ScreenManager(window);
 	if (!sprite.loadFromFile("Assets/Sprites/sprite.png"))
 	{
@@ -35,19 +33,12 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 			
-			//menu.update(window);
-			//btn.update(window);
+
 		}
 		manager.update();
 		window.clear();
-		//window.draw(testSprite);
-		//btn.draw(window);
-		//menu.draw(window);
 		manager.draw();
 		window.display();
 
 	}
-
-	//system("PAUSE");
-
 }

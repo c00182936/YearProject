@@ -1,29 +1,32 @@
 ﻿  ButtonManager.cpp
-ButtonManager.cpp(37): warning C4018: '<': signed/unsigned mismatch
-  Crystal.cpp
+ButtonManager.cpp(43): warning C4018: '<': signed/unsigned mismatch
+  GameOverScreen.cpp
   GameScreen.cpp
-GameScreen.cpp(5): warning C4018: '<': signed/unsigned mismatch
 GameScreen.cpp(7): warning C4018: '<': signed/unsigned mismatch
-GameScreen.cpp(15): warning C4018: '<': signed/unsigned mismatch
-GameScreen.cpp(17): warning C4018: '<': signed/unsigned mismatch
-GameScreen.cpp(54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-GameScreen.cpp(88): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-GameScreen.cpp(253): warning C4018: '<': signed/unsigned mismatch
+GameScreen.cpp(9): warning C4018: '<': signed/unsigned mismatch
+GameScreen.cpp(20): warning C4018: '<': signed/unsigned mismatch
+GameScreen.cpp(22): warning C4018: '<': signed/unsigned mismatch
+GameScreen.cpp(65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+GameScreen.cpp(103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+GameScreen.cpp(330): warning C4018: '<': signed/unsigned mismatch
   HudManager.cpp
-HudManager.cpp(39): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-HudManager.cpp(77): error C2039: 'getFeverLV': is not a member of 'Player'
-  g:\git\project\yearproject\base\base\Player.h(7): note: see declaration of 'Player'
-HudManager.cpp(155): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-HudManager.cpp(158): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+HudManager.cpp(43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 HudManager.cpp(161): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+HudManager.cpp(164): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+HudManager.cpp(167): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Main.cpp
   MainMenu.cpp
   MenuButton.cpp
-MenuButton.cpp(21): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-MenuButton.cpp(15): warning C4390: ';': empty controlled statement found; is this the intent?
+MenuButton.cpp(25): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+MenuButton.cpp(19): warning C4390: ';': empty controlled statement found; is this the intent?
   Player.cpp
-Player.cpp(25): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-Player.cpp(26): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
-Player.cpp(65): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-Player.cpp(66): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
+Player.cpp(48): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+Player.cpp(50): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
   ScreenManager.cpp
+  Generating code
+  22 of 697 functions ( 3.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    32 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Release\Base.exe
+  Base.vcxproj -> C:\Users\gameuser\YearProject\Base\Release\Base.pdb (Full PDB)
